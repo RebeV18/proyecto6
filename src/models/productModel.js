@@ -9,4 +9,4 @@ const productSchema = new Schema({
     precio: { type: Types.Double, required: true }
 }, { versionKey: false, timestamps: false });
 
-export const Products = mongoose.model('product', productSchema);
+export const Products = mongoose.model('products', productSchema);

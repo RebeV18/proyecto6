@@ -1,18 +1,18 @@
 import { Router } from 'express';
-import { createProducts, deleteProductById, getAllProducts, getDeleteAllProducts, getDeleteProductsById, getProductsById, permaDeleteProductById, restoreProductById, updateProductById } from '../controllers/products.controller.js';
+import { createProducts, deleteProductById, getAllProducts, getDeleteAllProducts, getDeleteProductsById, getProductsById, permaDeleteProductById, restoreProductById, updateProductById } from '../controllers/productController.js';
 
-const router = Router();
+const routerProduct = Router();
 
-router.get('/products', getAllProducts);
-router.get('/products/:id', getProductsById);
-router.post('/products', createProducts);
-router.put('/products/:id', updateProductById);
-router.delete('/products/admin/perma/:id', permaDeleteProductById);
-router.delete('/products/:id', deleteProductById);
-router.patch('/products/admin/restore/:id', restoreProductById);
+routerProduct.get('/products', getAllProducts);
+routerProduct.get('/products/:id', getProductsById);
+routerProduct.post('/products', createProducts);
+routerProduct.put('/products/:id', updateProductById);
+routerProduct.delete('/products/admin/perma/:id', permaDeleteProductById);
+routerProduct.delete('/products/:id', deleteProductById);
+routerProduct.patch('/products/admin/restore/:id', restoreProductById);
 
 
-router.get('/products/admin/erased', getDeleteAllProducts);
-router.get('/products/admin/erased/:id', getDeleteProductsById);
+routerProduct.get('/products/admin/erased', getDeleteAllProducts);
+routerProduct.get('/products/admin/erased/:id', getDeleteProductsById);
 
-export default router;
+export default routerProduct;

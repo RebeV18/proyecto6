@@ -1,5 +1,5 @@
 import { 
-    createUsersService, 
+    createUserService, 
     deleteUsersByIdService, 
     getAllDeleteUsersService, 
     getAllUsersService, 
@@ -36,10 +36,10 @@ export const getUsersById = async(req, res, next) => {
     }
 };
 
-export const createUsers = async(req, res, next) => {
+export const createUser = async(req, res, next) => {
     try {
         const dataUser = req.body;
-        const users = await createUsersService(dataUser);
+        const users = await createUserService(dataUser);
 
         response(res, users, 201, 'Usuario creada con éxito');
     } catch (error) {

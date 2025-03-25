@@ -1,8 +1,8 @@
-import { User } from "../models/userModel.js";
+import { Users } from "../models/userModel.js";
 
 export const getAllUsersService = async () => {
   try {
-    const users = await User.find({ isActive: true });
+    const users = await Users.find({ isActive: true });
     console.log(users);
 
     notFoundActiveData(

@@ -1,9 +1,14 @@
 {
   "name": "proyecto6",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
   },
   "keywords": [],
   "author": "",
@@ -11,8 +16,14 @@
   "description": "",
   "dependencies": {
     "dotenv": "^16.4.7",
-    "eslint": "^9.23.0",
     "express": "^4.21.2",
-    "mongoose": "^8.13.0"
+    "mongoose": "^8.12.1",
+    "mongoose-double": "^0.0.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/js": "^9.22.0",
+    "eslint": "^9.22.0",
+    "nodemon": "^3.1.9"
   }
 }

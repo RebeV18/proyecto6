@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema;
 
 const usersSchema = new Schema({
@@ -8,4 +10,4 @@ const usersSchema = new Schema({
     fono: { type: String, required: true },
 }, { versionKey: false, timestamps: false });
 
-export const Users = mongoose.model('user', usersSchema);
+export const Users = mongoose.model('users', usersSchema);

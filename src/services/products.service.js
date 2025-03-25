@@ -1,8 +1,8 @@
-import { Product } from "../models/productModel.js";
+import { Products } from "../models/productModel.js";
 
 export const getAllProductsService = async () => {
   try {
-    const products = await Product.find({ isActive: true });
+    const products = await Products.find({ isActive: true });
     console.log(products);
 
     notFoundActiveData(
