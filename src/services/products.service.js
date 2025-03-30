@@ -1,10 +1,8 @@
-import { Products } from "../models/productModel.js";
+import { Product } from "../models/Product.model.js";
 
 export const getAllProductsService = async () => {
   try {
     const products = await Products.find({ isActive: true });
-    console.log(products);
-
     notFoundActiveData(
       products,
       "No pudimos encontrar los productos",
@@ -24,7 +22,7 @@ export const getAllProductsService = async () => {
 
 export const getProductsByIdService = async (id) => {
     try {
-        const product = await Products.findById(id, { isActive: true });
+        const product = await Product.findById(id, { isActive: true });
 
         notFoundActiveData(
             product,
@@ -41,7 +39,7 @@ export const getProductsByIdService = async (id) => {
 export const createProductService = async(dataProduct) => {
     try {
         //TENEMOS QUE VALIDAR DATOS!!!! 
-        const product =  await Products.create(dataProduct);
+        const product =  await Product.create(dataProduct);
 
         return product;
     } catch (error) {
@@ -53,9 +51,9 @@ export const createProductService = async(dataProduct) => {
 export const updateProductByIdService = async(id, dataProduct) => {
     try {
         //TENEMOS QUE VALIDAR DATOS!!!!
-        const productOld = await Products.findOneAndUpdate({ _id: id, isActive: true }, dataProduct);
+        const productOld = await Product.findOneAndUpdate({ _id: id, isActive: true }, dataProduct);
 
-        const productUpdated = await Products.findById(id, { isActive: true });
+        const productUpdated = await Product.findById(id, { isActive: true });
 
         notFoundActiveData(
             productOld,
@@ -74,7 +72,7 @@ export const updateProductByIdService = async(id, dataProduct) => {
 
 export const permaDeleteProductByIdService = async(id) => {
     try {
-        const product = await Products.findByIdAndDelete(id);
+        const product = await Product.findByIdAndDelete(id);
         notFoundActiveData(
             product,
             `No pudimos encontrar el producto con el id: ${id}`,
@@ -91,7 +89,7 @@ export const permaDeleteProductByIdService = async(id) => {
 /*SOFT DELETE o DELETE LOGICO - ESTO SI SE TIENE QUE HACER*/
 export const deleteProductsByIdService = async(id) => {
     try {
-        const product = await Products.findByIdAndUpdate(id, { isActive: false});
+        const product = await Product.findByIdAndUpdate(id, { isActive: false});
 
         notFoundActiveData(
             product,
@@ -107,7 +105,7 @@ export const deleteProductsByIdService = async(id) => {
 
 export const restoreProductByIdService = async(id) => {
     try {
-        const product = await Products.findByIdAndUpdate(id, { isActive: true });
+        const product = await Product.findByIdAndUpdate(id, { isActive: true });
 
         notFoundData(
             product,
@@ -124,7 +122,7 @@ export const restoreProductByIdService = async(id) => {
 
 export const getAllDeleteProductsService = async () => {
     try {
-        const products = await Products.find({ isActive: false });
+        const products = await Product.find({ isActive: false });
         console.log(products);
 
         notFoundData(
@@ -145,7 +143,7 @@ export const getAllDeleteProductsService = async () => {
 
 export const getDeleteProductsByIdService = async (id) => {
     try {
-        const product = await Products.findById(id, { isActive: false });
+        const product = await Product.findById(id, { isActive: false });
 
         notFoundData(
             product,

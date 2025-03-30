@@ -3,9 +3,9 @@ import express from "express";
 import { envs } from "./src/config/envs.config.js";
 import { dbConnect } from "./src/config/db.config.js";
 
-import routerUser from "./src/routes/userRoutes.js";
-import routerProduct from "./src/routes/productRoutes.js";
-import { errorHandler } from "./src/middlewares/errorhandler.js";
+import apiRouter from "./src/routes/index.routes.js";
+
+import { errorHandler } from "./src/middlewares/errorHandler.js";
 
 import dotenv from "dotenv";
 
@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Middlewares de rutas
-app.use("/api/v1", routerProduct);
+app.use("/api/v1", apiRouter);
 
 //Middlewares de errores
 app.use(errorHandler);

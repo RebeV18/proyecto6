@@ -36,10 +36,10 @@ export const getProductsById = async(req, res, next) => {
     }
 };
 
-export const createProducts = async(req, res, next) => {
+export const createProduct = async(req, res, next) => {
     try {
         const dataProduct = req.body;
-        const products = await createProductsService(dataProduct);
+        const products = await createProductService(dataProduct);
 
         response(res, products, 201, 'Usuario creada con éxito');
     } catch (error) {

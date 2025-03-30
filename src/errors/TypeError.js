@@ -18,9 +18,15 @@ export class DataBaseError extends CustomError {
     }
 }
 
-export class PeliculasError extends CustomError {
+export class ProductError extends CustomError {
     constructor(message, statusCode, details) {
-        super(message || 'Error en la colección de proyecto6', statusCode || 500, details);
+        super(message || 'Error en la colección de productos', statusCode || 500, details);
+    }
+}
+
+export class AuthError extends CustomError {
+    constructor(message, statusCode, details) {
+        super(message || 'Error de autenticación', statusCode || 401, details);
     }
 }
 
