@@ -8,7 +8,7 @@ const { secretKey } = envs.auth;
 export const authMiddleware = (req, res, next) => {
   try {
     const { authorization } = req.headers;
-    const token = authorization.startsWith("Bearer ")
+    const token = authorization.startWith("Bearer")
       ? authorization.slice(7)
       : null;
 
