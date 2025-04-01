@@ -1,8 +1,11 @@
 import { Product } from "../models/Product.model.js";
+import { ProductsError } from "../errors/TypeError.js";
+import { notFoundActiveData, notFoundData } from '../utils/validate.js';
 
 export const getAllProductsService = async () => {
   try {
-    const products = await Products.find({ isActive: true });
+    const products = await Product.find({ isActive: true });
+    console.log(products);
     notFoundActiveData(
       products,
       "No pudimos encontrar los productos",
@@ -20,7 +23,7 @@ export const getAllProductsService = async () => {
 };
 
 
-export const getProductsByIdService = async (id) => {
+export const getProductByIdService = async (id) => {
     try {
         const product = await Product.findById(id, { isActive: true });
 
@@ -87,7 +90,7 @@ export const permaDeleteProductByIdService = async(id) => {
 
 
 /*SOFT DELETE o DELETE LOGICO - ESTO SI SE TIENE QUE HACER*/
-export const deleteProductsByIdService = async(id) => {
+export const deleteProductByIdService = async(id) => {
     try {
         const product = await Product.findByIdAndUpdate(id, { isActive: false});
 
@@ -141,7 +144,7 @@ export const getAllDeleteProductsService = async () => {
     }
 };
 
-export const getDeleteProductsByIdService = async (id) => {
+export const getDeleteProductByIdService = async (id) => {
     try {
         const product = await Product.findById(id, { isActive: false });
 

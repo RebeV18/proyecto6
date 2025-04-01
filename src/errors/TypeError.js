@@ -18,7 +18,7 @@ export class DataBaseError extends CustomError {
     }
 }
 
-export class ProductError extends CustomError {
+export class ProductsError extends CustomError {
     constructor(message, statusCode, details) {
         super(message || 'Error en la colección de productos', statusCode || 500, details);
     }

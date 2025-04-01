@@ -1,10 +1,10 @@
 import { 
     createProductService, 
-    deleteProductsByIdService, 
+    deleteProductByIdService, 
     getAllDeleteProductsService, 
     getAllProductsService, 
-    getDeleteProductsByIdService, 
-    getProductsByIdService, 
+    getDeleteProductByIdService, 
+    getProductByIdService, 
     permaDeleteProductByIdService, 
     restoreProductByIdService, 
     updateProductByIdService 
@@ -15,16 +15,16 @@ import { response } from '../utils/templates/response.template.js';
 export const getAllProducts = async(req, res, next) => {
     try {
         const products = await getAllProductsService();
-        response(res, products, 200, 'Usuarios encontrados con éxito');
+        response(res, products, 200, 'Productos encontrados con éxito');
     } catch (error) {
         next(error);
     }
 };
 
-export const getProductsById = async(req, res, next) => {
+export const getProductById = async(req, res, next) => {
     try {
         const { id } = req.params;
-        const products = await getProductsByIdService(id);
+        const products = await getProductByIdService(id);
         response(
             res,
             products,
@@ -82,7 +82,7 @@ export const permaDeleteProductById = async(req, res, next) => {
 export const deleteProductById = async(req, res, next) => {
     try {
         const { id } = req.params;
-        const product = await deleteProductsByIdService(id);
+        const product = await deleteProductByIdService(id);
 
         response(res, product, 200, `Usuario con el id: ${id} eliminada con éxito`);
     } catch (error) {
@@ -110,10 +110,10 @@ export const getDeleteAllProducts = async(req, res, next) => {
     }
 };
 
-export const getDeleteProductsById = async(req, res, next) => {
+export const getDeleteProductById = async(req, res, next) => {
     try {
         const { id } = req.params;
-        const products = await getDeleteProductsByIdService(id);
+        const products = await getDeleteProductByIdService(id);
         response(
             res,
             products,
