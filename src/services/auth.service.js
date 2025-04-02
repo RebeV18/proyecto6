@@ -2,6 +2,8 @@ import { User } from "../models/User.model.js";
 import { hashPassword } from "../utils/hashPassword.js";
 import { formatUserData } from "../utils/formatUserData.js";
 import { envs } from "../config/envs.config.js";
+import { notFoundData, notFoundActiveData } from "../utils/";
+import { AuthError, UsersError } from "../errors/TypeError.js";
 
 const { secretKey, jwtExpiration } = envs.auth;
 
