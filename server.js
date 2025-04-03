@@ -6,7 +6,7 @@ import { errorHandler } from "./src/middlewares/errorHandler.js";
 
 import dotenv from "dotenv";
 
-dotenv.config();
+//dotenv.config();
 
 const app = express();
 
@@ -28,5 +28,5 @@ app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
 });
 
-app.listen(envs.port, () => {
-});
+// app.listen(envs.port, () => {
+// });

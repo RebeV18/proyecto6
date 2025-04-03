@@ -8,13 +8,6 @@ export const validateDate = (date) => {
     }
 };
 
-/**
- * Arroja un error de NotFoundError si la data entrega es un falsy o un Array vacio
- * @param {any} data - Data que se desea evaluar
- * @param {string} message - Mensaje personalizado de error
- * @param {string} datails - Detalle personalizado de error
- * @throws {NotFoundError} - Si la data es falsy o un Array vacio
- */
 export const notFoundData = (data, message, datails) => {
     if(!data) throw new NotFoundError(
         message || 'No se encontraron los datos',
