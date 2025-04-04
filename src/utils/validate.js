@@ -43,6 +43,9 @@ export const notActive = (data, message, datails) => {
 };
 
 export const notFoundActiveData = (data, message, details) => {
-  notFoundData(data, message, details);
-  notActive(data, message, details);
+  if (!data || (Array.isArray(data) && data.length === 0)) {
+    throw new ProductsError(message, 404, details);
+  }
+  //notFoundData(data, message, details);
+  //notActive(data, message, details);
 };

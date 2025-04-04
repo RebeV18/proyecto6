@@ -14,7 +14,7 @@ export const dbConnect = async ({
     console.log("Nos conectamos con MongoDB!! :D 🛸");
 
     if (updateDocs) {
-      await updateDocsDB();
+      await updateDocsProducts();
       console.log("Documentos actualizados con éxito");
     }
 

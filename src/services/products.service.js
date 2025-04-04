@@ -6,7 +6,6 @@ export const getAllProductsService = async () => {
   try {
     const products = await Product.find({ isActive: true });
     console.log(products);
-
     notFoundActiveData(
       products,
       "No pudimos encontrar los productos",
