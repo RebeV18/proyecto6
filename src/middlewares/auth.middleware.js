@@ -8,19 +8,17 @@ const { secretKey } = envs.auth;
 export const authMiddleware = (req, res, next) => {
   try {
     const { authorization } = req.headers;
-    const token = authorization.startWith("Bearer")
+    const token = authorization.startsWith("Bearer ")
       ? authorization.slice(7)
       : null;
 
-    if (!token) {
-      throw new AuthError("Token inválido", 401);
-    }
+    if (!token) throw new AuthError("Token no proporcionado", 401);
 
-    const decodedToken = jwt.verify(token, secretKey);
-    req.user = decodedToken;
+    const decoded = jwt.verify(token, secretKey);
+    req.user = decoded;
 
     next();
   } catch (error) {
-    throw new AuthError("Error al intentar autenticar el usuario", 500, error);
+    throw new AuthError("Token invalido o inesperado", 500, error);
   }
 };

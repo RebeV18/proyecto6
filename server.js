@@ -4,15 +4,13 @@ import { dbConnect } from "./src/config/db.config.js";
 import apiRouter from "./src/routes/index.routes.js";
 import { errorHandler } from "./src/middlewares/errorHandler.js";
 
-import dotenv from "dotenv";
-
 //dotenv.config();
 
 const app = express();
 
 dbConnect();
 
-const PORT = process.env.PORT || 5000;
+const PORT = envs.port || 3000;
 
 //Middlewares para parsear el body a JSON
 app.use(express.json());

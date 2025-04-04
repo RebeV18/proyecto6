@@ -5,5 +5,6 @@ export const verifyAdmin = (req, res, next) => {
       statusCode: 403,
     });
   }
+
   next();
 };

@@ -1,9 +1,11 @@
-import { User } from "../models/User.model.js";
-import { hashPassword } from "../utils/hashPassword.js";
-import { formatUserData } from "../utils/formatUserData.js";
-import { envs } from "../config/envs.config.js";
-import { notFoundData, notFoundActiveData } from "../utils/validate.js";
+import jwt from "jsonwebtoken";
+
 import { AuthError } from "../errors/TypeError.js";
+import { User } from "../model/User.model.js";
+import { formatUserData } from "../utils/formatUserData.js";
+import { comparePassword, hashPassword } from "../utils/hashPassword.js";
+
+import { envs } from "../config/envs.config.js";
 
 const { secretKey, jwtExpiration } = envs.auth;
 
@@ -12,52 +14,38 @@ export const registerService = async ({
   apellido,
   pais,
   email,
-  fono,
+  telefono,
   password,
   isAdmin = false,
 }) => {
   try {
     const hashedPassword = await hashPassword(password);
+
+    console.log(hashedPassword);
+
     const userData = formatUserData(
       hashedPassword,
       nombre,
       apellido,
       pais,
       email,
-      fono,
+      telefono,
       isAdmin
     );
+    console.log(userData);
 
     const user = await User.create(userData);
+
     return user;
   } catch (error) {
-    throw new Error(`Error al intentar registrar el usuario`, 500, error);
+    console.error(error);
+    throw new Error("Error al intentar registrar el usuario", 500, error);
   }
 };
 
-export const getAllUsersService = async () => {
+export const loginService = async ({ email, password }) => {
   try {
-    const users = await User.find({ isActive: true });
-    notFoundActiveData(
-      users,
-      "No pudimos encontrar los usuarios",
-      "No pudimos encontrar usuarios en la base de datos en la colección de usuarios"
-    );
-
-    return users;
-  } catch (error) {
-    throw new UsersError(
-      "Error al intentar obtener todas los usuarios",
-      500,
-      error
-    );
-  }
-};
-
-export const loginService = async (email, password) => {
-  try {
-    const user = await Usuario.findOne({ email });
-    notFoundData(user);
+    const user = await User.findOne({ email });
 
     const passwordMatch = await comparePassword(password, user.password);
 
@@ -73,11 +61,23 @@ export const loginService = async (email, password) => {
         isAdmin: user.isAdmin,
       },
       secretKey,
-      { expiresIn: jwtExpiration }
+      {
+        expiresIn: jwtExpiration,
+      }
     );
 
     return [user, token];
   } catch (error) {
-    throw new AuthError(`Error al intentar autenticar el usuario`, 500, error);
+    throw new AuthError("Error al intentar iniciar sesión", 500, error);
+  }
+};
+
+export const getAllUsersService = async () => {
+  try {
+    const users = await User.find({ isActive: true });
+    console.log(users);
+    return users;
+  } catch (error) {
+    throw new Error("Error al intentar obtener todos los usuarios", 500, error);
   }
 };

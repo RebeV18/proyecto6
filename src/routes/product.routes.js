@@ -1,20 +1,43 @@
-import { Router } from 'express';
-import { createProduct, deleteProductById, getAllProducts, getDeleteAllProducts, getDeleteProductById, getProductById, permaDeleteProductById, restoreProductById, updateProductById } from '../controllers/product.controller.js';
-import { authMiddleware } from '../middlewares/auth.middleware.js';
-import { verifyAdmin } from '../middlewares/verifyAdmin.middleware.js';
+import { Router } from "express";
+import {
+  createProduct,
+  deleteProductById,
+  getAllProducts,
+  getDeleteAllProducts,
+  getDeletedProductById,
+  getProductById,
+  restoreProductById,
+  updateProductById,
+} from "../controllers/products.controller.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { verifyAdmin } from "../middlewares/verifyAdmin.middleware.js";
 
-const routerProduct = Router();
+const router = Router();
 
-routerProduct.get('/', getAllProducts);
-routerProduct.get('/:id', authMiddleware, getProductById);
-routerProduct.post('/', authMiddleware, verifyAdmin, createProduct);
-routerProduct.put('/:id', authMiddleware, verifyAdmin, updateProductById);
-routerProduct.delete('/admin/perma/:id', authMiddleware, verifyAdmin, permaDeleteProductById);
-routerProduct.delete('/:id', authMiddleware, verifyAdmin, deleteProductById);
-routerProduct.patch('/admin/restore/:id', authMiddleware, verifyAdmin, restoreProductById);
+router.get("/", getAllProducts);
+router.get("/:id", getProductById);
+router.post("/", authMiddleware, createProduct);
+router.put("/:id", authMiddleware, updateProductById);
+router.delete(
+  "/admin/perma/:id",
+  authMiddleware,
+  verifyAdmin,
+  permaDeleteProductById
+);
+router.delete("/:id", deleteProductById);
+router.patch(
+  "/admin/restore/:id",
+  authMiddleware,
+  verifyAdmin,
+  restoreProductById
+);
 
+router.get("/admin/erased", authMiddleware, verifyAdmin, getDeleteAllProducts);
+router.get(
+  "/admin/erased/:id",
+  authMiddleware,
+  verifyAdmin,
+  getDeletedProductById
+);
 
-routerProduct.get('/admin/erased', authMiddleware, verifyAdmin, getDeleteAllProducts);
-routerProduct.get('/admin/erased/:id', authMiddleware, verifyAdmin, getDeleteProductById);
-
-export default routerProduct;
+export default router;
