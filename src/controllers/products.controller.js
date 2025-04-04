@@ -1,9 +1,9 @@
 import {
   createProductService,
   deleteProductByIdService,
-  getAllDeleteProductsService,
+  getAllDeletedProductsService,
   getAllProductsService,
-  getDeleteProductByIdService,
+  getDeletedProductByIdService,
   getProductByIdService,
   restoreProductByIdService,
   updateProductByIdService,
@@ -72,7 +72,6 @@ export const updateProductById = async (req, res, next) => {
   }
 };
 
-/*SOFT DELETE*/
 export const deleteProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -104,9 +103,9 @@ export const restoreProductById = async (req, res, next) => {
   }
 };
 
-export const getDeleteAllProducts = async (req, res, next) => {
+export const getDeletedAllProducts = async (req, res, next) => {
   try {
-    const products = await getAllDeleteProductsService();
+    const products = await getAllDeletedProductsService();
     response(
       res,
       products,
@@ -118,10 +117,10 @@ export const getDeleteAllProducts = async (req, res, next) => {
   }
 };
 
-export const getDeleteProductById = async (req, res, next) => {
+export const getDeletedProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const products = await getDeleteProductByIdService(id);
+    const products = await getDeletedProductByIdService(id);
     response(
       res,
       products,

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 import { AuthError } from "../errors/TypeError.js";
-import { User } from "../model/User.model.js";
+import { User } from "../models/User.model.js";
 import { formatUserData } from "../utils/formatUserData.js";
 import { comparePassword, hashPassword } from "../utils/hashPassword.js";
 

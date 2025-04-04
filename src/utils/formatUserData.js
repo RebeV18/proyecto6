@@ -1,6 +1,6 @@
 import { ValidationError } from "../errors/TypeError.js";
 
-export const formateUserData = (hashedPassword, ...rest) => {
+export const formatUserData = (hashedPassword, ...rest) => {
   const [nombre, apellido, pais, email, telefono, isAdmin = false] = rest;
 
   if (!nombre) {

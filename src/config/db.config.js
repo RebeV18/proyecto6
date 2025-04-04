@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { envs } from "./envs.config.js";
 import { DataBaseError } from "../errors/TypeError.js";
-import { updateDocsDB } from "../services/db/updateDocsDB.js";
+import { updateDocsProducts } from "../services/DB/updateDocsProducts.js";
 
 const { db } = envs;
 

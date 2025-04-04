@@ -1,9 +1,9 @@
 import { DataBaseError } from "../../errors/TypeError.js";
-import { Products } from "../../model/Product.model.js";
+import { Product } from "../../models/Product.model.js";
 
-export const updateDocsDB = async () => {
+export const updateDocsProducts = async () => {
   try {
-    await Products.updateMany(
+    await Product.updateMany(
       { isActive: { $exists: false } },
       { $set: { isActive: true } }
     );

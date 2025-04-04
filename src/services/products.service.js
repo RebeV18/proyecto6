@@ -1,5 +1,5 @@
 import { ProductsError } from "../errors/TypeError.js";
-import { Product } from "../model/Product.model.js";
+import { Product } from "../models/Product.model.js";
 import { notFoundActiveData, notFoundData } from "../utils/validate.js";
 
 export const getAllProductsService = async () => {
@@ -45,7 +45,6 @@ export const getProductByIdService = async (id) => {
 
 export const createProductService = async (dataProduct) => {
   try {
-    //TENEMOS QUE VALIDAR DATOS!!!!
     const product = await Product.create(dataProduct);
 
     return product;
@@ -56,7 +55,6 @@ export const createProductService = async (dataProduct) => {
 
 export const updateProductByIdService = async (id, dataProduct) => {
   try {
-    //TENEMOS QUE VALIDAR DATOS!!!!
     const productOld = await Product.findOneAndUpdate(
       { _id: id, isActive: true },
       dataProduct

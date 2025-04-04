@@ -3,7 +3,7 @@ import {
   createProduct,
   deleteProductById,
   getAllProducts,
-  getDeleteAllProducts,
+  getDeletedAllProducts,
   getDeletedProductById,
   getProductById,
   restoreProductById,
@@ -18,12 +18,7 @@ router.get("/", getAllProducts);
 router.get("/:id", getProductById);
 router.post("/", authMiddleware, createProduct);
 router.put("/:id", authMiddleware, updateProductById);
-router.delete(
-  "/admin/perma/:id",
-  authMiddleware,
-  verifyAdmin,
-  permaDeleteProductById
-);
+router.delete("/admin/perma/:id", authMiddleware, verifyAdmin);
 router.delete("/:id", deleteProductById);
 router.patch(
   "/admin/restore/:id",
@@ -32,7 +27,7 @@ router.patch(
   restoreProductById
 );
 
-router.get("/admin/erased", authMiddleware, verifyAdmin, getDeleteAllProducts);
+router.get("/admin/erased", authMiddleware, verifyAdmin, getDeletedAllProducts);
 router.get(
   "/admin/erased/:id",
   authMiddleware,
