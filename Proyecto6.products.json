@@ -1,0 +1,610 @@
+[{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89ae"
+  },
+  "cancion": "Viene Hoy",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89af"
+  },
+  "cancion": "Nueva Estación",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89b0"
+  },
+  "cancion": "Nombre sobre todo nombre",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89b1"
+  },
+  "cancion": "Todo es por Ti",
+  "autores": "Kevin León",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89b2"
+  },
+  "cancion": "Sea lo que sea",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89b3"
+  },
+  "cancion": "Esclavo por Amor",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89b4"
+  },
+  "cancion": "Lugar Santo",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89b5"
+  },
+  "cancion": "Para Él",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89b6"
+  },
+  "cancion": "Espontáneo",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89b7"
+  },
+  "cancion": "Selah",
+  "autores": "Abraham Ayala",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89b8"
+  },
+  "cancion": "En lo secreto",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89b9"
+  },
+  "cancion": "Isaías 6",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89ba"
+  },
+  "cancion": "Yo Miro Tu Gloria",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Yo  Miro tu Gloria",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89bb"
+  },
+  "cancion": "Llamado a la Guerra",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89bc"
+  },
+  "cancion": "Bajo la Orden de Jehová",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89bd"
+  },
+  "cancion": "En el Espíritu de Dios",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89be"
+  },
+  "cancion": "Declaraciones Proféticas / Profetas Luis y Mercedes Aquino",
+  "autores": "Profetas Luis y Mercedes Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89bf"
+  },
+  "cancion": "En el Espíritu de Dios (Reprise)",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89c0"
+  },
+  "cancion": "Profetizamos Hoy",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89c1"
+  },
+  "cancion": "Espontáneo",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89c2"
+  },
+  "cancion": "Sube Hoy",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89c3"
+  },
+  "cancion": "Espontáneo II",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89c4"
+  },
+  "cancion": "Palabras Proféticas a las Naciones",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89c5"
+  },
+  "cancion": "Prédica 'El Valle de Josafat'",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89c6"
+  },
+  "autores": "Luis Gerardo Aquino",
+  "cancion": "El León Rugirá [Joel 3]",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89c7"
+  },
+  "cancion": "Espontáneo III",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89c8"
+  },
+  "cancion": "Con Sonido de Alabanza",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89c9"
+  },
+  "cancion": "No Hay Nadie Como Tú",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89ca"
+  },
+  "cancion": "Espontáneo IV [Tipo León]",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Bajo la Orden de Jehová",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89cb"
+  },
+  "cancion": "El Tiempo es Hoy",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Sesiones Acústicas",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89cc"
+  },
+  "cancion": "Cada vez más y más",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Sesiones Acústicas",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89cd"
+  },
+  "cancion": "Jesús",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Sesiones Acústicas",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89ce"
+  },
+  "cancion": "Te Adoro oh Dios",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Sesiones Acústicas",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89cf"
+  },
+  "cancion": "El Tiempo es Hoy",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89d0"
+  },
+  "cancion": "Rey de las Naciones",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89d1"
+  },
+  "cancion": "Cada vez más y más",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89d2"
+  },
+  "cancion": "Ministración (Apóstol Luis Aquino)",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89d3"
+  },
+  "cancion": "Quiero Tocarte",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89d4"
+  },
+  "cancion": "Mi Adoración Eres Tú (Espontáneo)",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89d5"
+  },
+  "cancion": "Las Naciones Clamarán",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89d6"
+  },
+  "cancion": "Te Necesito Aquí",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89d7"
+  },
+  "cancion": "Te Adoro oh Dios",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89d8"
+  },
+  "cancion": "Porque Digno Eres Tú",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89d9"
+  },
+  "cancion": "Rey Vencedor",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Rey de las Naciones",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89da"
+  },
+  "cancion": "Tu Luz Brilla Hoy",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89db"
+  },
+  "cancion": "Rey Vencedor",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89dc"
+  },
+  "cancion": "Tú Llenas Todo",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89dd"
+  },
+  "cancion": "Nada se Compara a Ti",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89de"
+  },
+  "cancion": "Conmigo Estás",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89df"
+  },
+  "cancion": "Tiempo de Resplandecer",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89e0"
+  },
+  "cancion": "Canto Espontáneo",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89e1"
+  },
+  "cancion": "Dios Creador",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89e2"
+  },
+  "cancion": "Ministración",
+  "autores": "Apóstol Luis Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89e3"
+  },
+  "cancion": "El Nombre de Jesús",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89e4"
+  },
+  "cancion": "Rey de Gloria",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89e5"
+  },
+  "cancion": "Mi Razón de Vivir",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89e6"
+  },
+  "cancion": "Jesús",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89e7"
+  },
+  "cancion": "Moses Prayer",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Tiempo de Resplandecer",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89e8"
+  },
+  "cancion": "La Luz de tu Amor",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Single",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89e9"
+  },
+  "cancion": "Hay poder",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Single",
+  "precio": 0.99,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "67e1d9a895ca4834a7fa89ea"
+  },
+  "cancion": "Espíritu de Dios",
+  "autores": "Luis Gerardo Aquino",
+  "cd": "Single",
+  "precio": 0.99,
+  "isActive": true
+}]

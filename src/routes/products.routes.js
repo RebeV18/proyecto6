@@ -12,27 +12,26 @@ import {
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { verifyAdmin } from "../middlewares/verifyAdmin.middleware.js";
 
-const router = Router();
+const productRouter = Router();
 
-router.get("/", getAllProducts);
-router.get("/:id", getProductById);
-router.post("/", authMiddleware, createProduct);
-router.put("/:id", authMiddleware, updateProductById);
-router.delete("/admin/perma/:id", authMiddleware, verifyAdmin);
-router.delete("/:id", deleteProductById);
-router.patch(
+productRouter.get("/", getAllProducts);
+productRouter.get("/:id", getProductById);
+productRouter.post("/", authMiddleware, createProduct);
+productRouter.put("/:id", authMiddleware, updateProductById);
+productRouter.delete("/:id", deleteProductById);
+productRouter.patch(
   "/admin/restore/:id",
   authMiddleware,
   verifyAdmin,
   restoreProductById
 );
 
-router.get("/admin/erased", authMiddleware, verifyAdmin, getDeletedAllProducts);
-router.get(
+productRouter.get("/admin/erased", authMiddleware, verifyAdmin, getDeletedAllProducts);
+productRouter.get(
   "/admin/erased/:id",
   authMiddleware,
   verifyAdmin,
   getDeletedProductById
 );
 
-export default router;
+export default productRouter;

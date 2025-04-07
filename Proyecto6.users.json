@@ -1,0 +1,26 @@
+[{
+  "_id": {
+    "$oid": "67eb13732bc4b81c2ab5fff6"
+  },
+  "nombre": "Rebeca",
+  "apellido": "Vargas",
+  "pais": "Chile",
+  "email": "rebe.vargas@gmail.com",
+  "fono": "+56999999999",
+  "password": "Rebe2025",
+  "isActive": true,
+  "isAdmin": true
+},
+{
+  "_id": {
+    "$oid": "67ec6335ac1e8c0e0f98b965"
+  },
+  "nombre": "Claudio",
+  "apellido": "Bravo",
+  "pais": "Chile",
+  "email": "rebe.vargas@gmail.com",
+  "fono": "+56999999999",
+  "password": "Portero1",
+  "isActive": true,
+  "isAdmin": false
+}]

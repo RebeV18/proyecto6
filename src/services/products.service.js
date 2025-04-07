@@ -5,7 +5,6 @@ import { notFoundActiveData, notFoundData } from "../utils/validate.js";
 export const getAllProductsService = async () => {
   try {
     const products = await Product.find({ isActive: true });
-    console.log(products);
     notFoundActiveData(
       products,
       "No pudimos encontrar los productos",
@@ -25,7 +24,6 @@ export const getAllProductsService = async () => {
 export const getProductByIdService = async (id) => {
   try {
     const product = await Product.findById(id, { isActive: true });
-
     notFoundActiveData(
       product,
       `No pudimos encontrar el producto con el id: ${id}`,

@@ -5,7 +5,7 @@ dotenv.config();
 export const envs = {
   port: process.env.PORT || 3000,
   db: {
-    uri: process.env.MONGO_URI,
+    uri: process.env.MONGO_URL,
   },
   auth: {
     saltRounds: process.env.SALT_ROUNDS || 10,

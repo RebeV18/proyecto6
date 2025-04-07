@@ -4,8 +4,6 @@ import { dbConnect } from "./src/config/db.config.js";
 import apiRouter from "./src/routes/index.routes.js";
 import { errorHandler } from "./src/middlewares/errorHandler.js";
 
-//dotenv.config();
-
 const app = express();
 
 dbConnect();
@@ -23,8 +21,5 @@ app.use("/api/v1", apiRouter);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`✅ Servidor corriendo en el puerto: ${PORT}`);
 });
-
-// app.listen(envs.port, () => {
-// });

@@ -14,7 +14,7 @@ import { response } from "../utils/templates/response.template.js";
 export const getAllProducts = async (req, res, next) => {
   try {
     const products = await getAllProductsService();
-    response(res, products, 200, "Productos encontrada con éxito");
+    response(res, products, 200, "Productos encontrados con éxito");
   } catch (error) {
     next(error);
   }
@@ -23,12 +23,12 @@ export const getAllProducts = async (req, res, next) => {
 export const getProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const products = await getProductByIdService(id);
+    const product = await getProductByIdService(id);
     response(
       res,
-      products,
+      product,
       200,
-      `Productos con el id: ${id} encontrada con éxito`
+      `Productos con el id: ${id} encontrado con éxito`
     );
   } catch (error) {
     next(error);

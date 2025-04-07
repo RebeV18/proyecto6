@@ -9,11 +9,11 @@ import {
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { verifyAdmin } from "../middlewares/verifyAdmin.middleware.js";
 
-const router = Router();
+const authRouter = Router();
 
-router.post("/register", register);
-router.post("/login", login);
+authRouter.post("/register", register);
+authRouter.post("/login", login);
 
-router.get("/", authMiddleware, verifyAdmin, getAllUsers);
+authRouter.get("/", authMiddleware, verifyAdmin, getAllUsers);
 
-export default router;
+export default authRouter;

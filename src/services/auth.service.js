@@ -21,8 +21,6 @@ export const registerService = async ({
   try {
     const hashedPassword = await hashPassword(password);
 
-    console.log(hashedPassword);
-
     const userData = formatUserData(
       hashedPassword,
       nombre,
@@ -48,6 +46,9 @@ export const loginService = async ({ email, password }) => {
     const user = await User.findOne({ email });
 
     const passwordMatch = await comparePassword(password, user.password);
+    console.log(user.password);
+    console.log(password);
+    console.log(passwordMatch);
 
     if (!user || !passwordMatch) {
       throw new AuthError("Credenciales incorrectas", 401);
