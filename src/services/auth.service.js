@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
 
-import { AuthError } from "../errors/TypeError.js";
+import { AuthError, UserError } from "../errors/TypeError.js";
 import { User } from "../models/User.model.js";
 import { formatUserData } from "../utils/formatUserData.js";
 import { comparePassword, hashPassword } from "../utils/hashPassword.js";
+import { notFoundActiveData } from "../utils/validate.js";
 
 import { envs } from "../config/envs.config.js";
 
@@ -75,5 +76,30 @@ export const getAllUsersService = async () => {
     return users;
   } catch (error) {
     throw new Error("Error al intentar obtener todos los usuarios", 500, error);
+  }
+};
+
+export const updateUserByIdService = async (id, dataUser) => {
+  try {
+    const oldUser = await User.findOneAndUpdate(
+      { _id: id, isActive: true },
+      dataUser
+    );
+
+    const updatedUser = await User.findById(id, { isActive: true });
+
+    notFoundActiveData(
+      oldUser,
+      `No pudimos encontrar el usuario con el id: ${id}`,
+      `No pudimos encontrar el usuario con id: ${id} en la colección de usuarios de la base de datos`
+    );
+
+    return [oldUser, updatedUser];
+  } catch (error) {
+    throw new UserError(
+      "Error al intentar actualizar el usuario con el ID",
+      500,
+      error
+    );
   }
 };

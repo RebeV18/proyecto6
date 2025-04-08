@@ -1,5 +1,6 @@
 import {
   getAllUsersService,
+  updateUserByIdService,
   loginService,
   registerService,
 } from "../services/auth.service.js";
@@ -32,6 +33,32 @@ export const getAllUsers = async (req, res, next) => {
   try {
     const users = await getAllUsersService();
     response(res, users, 200, "Usuarios encontrados con éxito");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const dataUser = req.body;
+
+    const [oldUser, updatedUser] = await updateUserByIdService(
+      id,
+      dataUser
+    );
+
+    const custom = {
+      oldData: oldUser,
+    };
+
+    response(
+      res,
+      updatedUser,
+      201,
+      `El usuario con el id: ${id} fue actualizado con éxito`,
+      custom
+    );
   } catch (error) {
     next(error);
   }

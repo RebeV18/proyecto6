@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import {
   getAllUsers,
+  updateUserById,
   login,
   register,
 } from "../controllers/auth.controller.js";
@@ -15,5 +16,7 @@ authRouter.post("/register", register);
 authRouter.post("/login", login);
 
 authRouter.get("/", authMiddleware, verifyAdmin, getAllUsers);
+
+authRouter.put("/:id", authMiddleware, updateUserById);
 
 export default authRouter;

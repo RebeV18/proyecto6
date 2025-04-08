@@ -1,9 +1,7 @@
 import {
   createProductService,
   deleteProductByIdService,
-  getAllDeletedProductsService,
   getAllProductsService,
-  getDeletedProductByIdService,
   getProductByIdService,
   restoreProductByIdService,
   updateProductByIdService,
@@ -97,35 +95,6 @@ export const restoreProductById = async (req, res, next) => {
       product,
       200,
       `Producto con el id: ${id} restaurado con éxito`
-    );
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const getDeletedAllProducts = async (req, res, next) => {
-  try {
-    const products = await getAllDeletedProductsService();
-    response(
-      res,
-      products,
-      200,
-      "Productos eliminados fueron encontrados con éxito"
-    );
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const getDeletedProductById = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const products = await getDeletedProductByIdService(id);
-    response(
-      res,
-      products,
-      200,
-      `Producto con el id: ${id} encontrado con éxito`
     );
   } catch (error) {
     next(error);

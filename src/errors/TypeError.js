@@ -28,6 +28,16 @@ export class ProductsError extends CustomError {
   }
 }
 
+export class UserError extends CustomError {
+  constructor(message, statusCode, details) {
+    super(
+      message || "Error en la colección de usuarios",
+      statusCode || 500,
+      details
+    );
+  }
+}
+
 export class AuthError extends CustomError {
   constructor(message, statusCode, details) {
     super(message || "Error de autenticación", statusCode || 401, details);
