@@ -10,6 +10,7 @@ export const envs = {
   auth: {
     saltRounds: process.env.SALT_ROUNDS || 10,
     secretKey: process.env.SECRET_KEY,
+    refreshSecretKey: process.env.REFRESH_SECRET_KEY,
     jwtExpiration: process.env.JWT_EXPIRATION || "1h",
   },
 };

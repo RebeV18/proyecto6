@@ -14,12 +14,12 @@ import { verifyAdmin } from "../middlewares/verifyAdmin.middleware.js";
 
 const productRouter = Router();
 
-productRouter.get("/", getAllProducts);
-productRouter.post("/", authMiddleware, verifyAdmin, createProduct);
-productRouter.patch("/admin/restore/:id", authMiddleware, verifyAdmin, restoreProductById);
-productRouter.get("/:id", getProductById);
-productRouter.put("/:id", authMiddleware, verifyAdmin, updateProductById);
-productRouter.delete("/:id", authMiddleware, verifyAdmin, deleteProductById);
+productRouter.post("/create", authMiddleware, verifyAdmin, createProduct);
+productRouter.get("/readall", getAllProducts);
+productRouter.get("/readone/:id", getProductById);
+productRouter.put("/update/:id", authMiddleware, verifyAdmin, updateProductById);
+productRouter.delete("/delete/:id", authMiddleware, verifyAdmin, deleteProductById);
+productRouter.patch("/restore/:id", authMiddleware, verifyAdmin, restoreProductById);
 
 
 export default productRouter;

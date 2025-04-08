@@ -8,7 +8,7 @@ import { notFoundActiveData } from "../utils/validate.js";
 
 import { envs } from "../config/envs.config.js";
 
-const { secretKey, jwtExpiration } = envs.auth;
+const { secretKey, refreshSecretKey, jwtExpiration } = envs.auth;
 
 export const registerService = async ({
   nombre,
@@ -101,5 +101,22 @@ export const updateUserByIdService = async (id, dataUser) => {
       500,
       error
     );
+  }
+};
+
+export const refreshTokenService = async (refreshToken) => {
+  try {
+    if (!refreshToken)
+      throw new AuthError("Refresh token no proporcionado", 401);
+
+    const decoded = jwt.verify(refreshToken, refreshSecretKey);
+
+    const newAccessToken = jwt.sign({ uid: decoded.uid }, secretKey, {
+      expiresIn: envs.auth.jwtExpiration,
+    });
+
+    return newAccessToken;
+  } catch (error) {
+    throw new AuthError("Refresh token inválido o expirado", 401, error);
   }
 };

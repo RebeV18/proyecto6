@@ -3,8 +3,11 @@ import {
   updateUserByIdService,
   loginService,
   registerService,
+  refreshTokenService,
 } from "../services/auth.service.js";
+
 import { response } from "../utils/templates/response.template.js";
+import { AuthError } from "../utils/errors/AuthError.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -43,10 +46,14 @@ export const updateUserById = async (req, res, next) => {
     const { id } = req.params;
     const dataUser = req.body;
 
-    const [oldUser, updatedUser] = await updateUserByIdService(
-      id,
-      dataUser
-    );
+    if (req.user.uid !== id) {
+      throw new AuthError(
+        "No tienes permiso para editar este usuario",
+        403
+      );
+    }
+
+    const [oldUser, updatedUser] = await updateUserByIdService(id, dataUser);
 
     const custom = {
       oldData: oldUser,
@@ -59,6 +66,16 @@ export const updateUserById = async (req, res, next) => {
       `El usuario con el id: ${id} fue actualizado con éxito`,
       custom
     );
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const verifyToken = async (req, res, next) => {
+  try {
+    const { refreshToken } = req.body;
+    const newAccessToken = await refreshTokenService(refreshToken);
+    res.status(200).json({ accessToken: newAccessToken });
   } catch (error) {
     next(error);
   }
