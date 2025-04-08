@@ -15,15 +15,15 @@ const userSchema = new Schema(
       lowercase: true,
       match: [/.+@.+\..+/, "El correo no es valido"],
     },
-    fono: {
+    telefono: {
       type: String,
       required: true,
       trim: true,
       validate: {
         validator(value) {
-          return /^\+[0-9]{10}$/.test(value);
+          return /^\+[0-9]{11}$/.test(value);
         },
-        message: "El telefono debe contener 10 digitos",
+        message: "El telefono debe contener 11 digitos",
       },
     },
     password: { type: String, required: true, trim: true },

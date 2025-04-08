@@ -30,7 +30,6 @@ export const registerService = async ({
       telefono,
       isAdmin
     );
-    console.log(userData);
 
     const user = await User.create(userData);
 
@@ -46,9 +45,6 @@ export const loginService = async ({ email, password }) => {
     const user = await User.findOne({ email });
 
     const passwordMatch = await comparePassword(password, user.password);
-    console.log(user.password);
-    console.log(password);
-    console.log(passwordMatch);
 
     if (!user || !passwordMatch) {
       throw new AuthError("Credenciales incorrectas", 401);
@@ -76,7 +72,6 @@ export const loginService = async ({ email, password }) => {
 export const getAllUsersService = async () => {
   try {
     const users = await User.find({ isActive: true });
-    console.log(users);
     return users;
   } catch (error) {
     throw new Error("Error al intentar obtener todos los usuarios", 500, error);

@@ -23,7 +23,7 @@ export const getAllProductsService = async () => {
 
 export const getProductByIdService = async (id) => {
   try {
-    const product = await Product.findById(id, { isActive: true });
+    const product = await Product.findById(id);
     notFoundActiveData(
       product,
       `No pudimos encontrar el producto con el id: ${id}`,
@@ -118,7 +118,6 @@ export const restoreProductByIdService = async (id) => {
 export const getAllDeletedProductsService = async () => {
   try {
     const products = await Product.find({ isActive: false });
-    console.log(products);
 
     notFoundData(
       products,
