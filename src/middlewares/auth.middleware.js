@@ -24,6 +24,6 @@ export const authMiddleware = (req, res, next) => {
         401
       );
     }
-    throw new AuthError("Token inválido o inesperado", 500, error);
+    throw new AuthError("Token inválido o error inesperado", 500, error);
   }
 };

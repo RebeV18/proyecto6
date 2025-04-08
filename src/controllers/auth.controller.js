@@ -3,7 +3,6 @@ import {
   updateUserByIdService,
   loginService,
   registerService,
-  refreshTokenService,
 } from "../services/auth.service.js";
 
 import { response } from "../utils/templates/response.template.js";
@@ -71,11 +70,12 @@ export const updateUserById = async (req, res, next) => {
   }
 };
 
-export const verifyToken = async (req, res, next) => {
+export const verifyToken = (req, res, next) => {
   try {
-    const { refreshToken } = req.body;
-    const newAccessToken = await refreshTokenService(refreshToken);
-    res.status(200).json({ accessToken: newAccessToken });
+    res.status(200).json({
+      message: "Token válido",
+      user: req.user,
+    });
   } catch (error) {
     next(error);
   }

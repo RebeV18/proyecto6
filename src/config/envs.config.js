@@ -5,7 +5,7 @@ dotenv.config();
 export const envs = {
   port: process.env.PORT || 3000,
   db: {
-    uri: process.env.MONGO_ATLAS,
+    uri: process.env.MONGO_ATLAS || "mongodb://localhost:27017/mi_base_de_datos",
   },
   auth: {
     saltRounds: process.env.SALT_ROUNDS || 10,

@@ -100,7 +100,10 @@ export const deleteProductByIdService = async (id) => {
 
 export const restoreProductByIdService = async (id) => {
   try {
-    const product = await Product.findByIdAndUpdate(id, { isActive: true });
+    const product = await Product.findOneAndUpdate(
+      { _id: id, isActive: false },
+      { isActive: true }
+    );
 
     notFoundData(
       product,
