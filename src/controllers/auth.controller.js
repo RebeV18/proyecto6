@@ -7,7 +7,7 @@ import {
 } from "../services/auth.service.js";
 
 import { response } from "../utils/templates/response.template.js";
-import { AuthError } from "../utils/errors/AuthError.js";
+import { AuthError } from "../errors/TypeError.js";
 
 export const register = async (req, res, next) => {
   try {
