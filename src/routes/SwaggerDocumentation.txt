@@ -1,0 +1,98 @@
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *    Product:
+ *      type: object
+ *      properties:
+ *        idProd:
+ *          type: string
+ *        cancion:
+ *          type: string
+ *        autores:
+ *          type: string
+ *        cd:
+ *          type: string
+  *        precio:
+ *          type: double
+ *          isActive:
+ *            type: boolean
+
+ *    User:
+ *      type: object
+ *      properties:
+ *        idProd:
+ *          type: string
+ *        nombre:
+ *          type: string
+  *       apellido:
+ *          type: string
+ *        pais:
+ *          type: string
+  *       email:
+ *          type: string
+ *        telefono:
+ *          type: string
+  *        password:
+ *          type: string
+ *          isActive:
+ *            type: boolean
+  *         isAdmin:
+ *            type: boolean
+
+ */
+
+/**
+ * @swagger
+ * /api/pizzas/create:
+ *   post:
+ *     summary: Crea una nueva pizza
+ *     tags: [Pizzas]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Pizza'
+ *     responses:
+ *       200:
+ *         description: La pizza se creó con éxito
+ *       400:
+ *         description: Error al crear la pizza
+ */
+
+ router.post("/create", pizzaController.create);
+
+ /**
+  * @swagger
+  * /api/pizzas/readall:
+  *   get:
+  *     summary: Obtiene todas las pizzas
+  *     tags: [Pizzas]
+  *     responses:
+  *       200:
+  *         description: Lista de todas las pizzas
+  *       400:
+  *         description: Error al obtener las pizzas
+  */
+ 
+ router.get("/readall", pizzaController.readAll);
+ 
+ /**
+  * @swagger
+  * /api/pizzas/readone/{slug}:
+  *   get:
+  *     summary: Obtiene una pizza por slug
+  *     tags: [Pizzas]
+  *     parameters:
+  *       - in: path
+  *         name: slug
+  *         schema:
+  *           type: string
+  *         required: true
+  *         description: Slug de la pizza
+  *     responses:
+  *       200:
+  *         description: Datos de la pizza
+  *       400:
+  *         description: Error al obtener la pizza
+  */

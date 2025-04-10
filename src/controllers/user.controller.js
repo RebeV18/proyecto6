@@ -3,7 +3,7 @@ import {
   updateUserByIdService,
   loginService,
   registerService,
-} from "../services/auth.service.js";
+} from "../services/user.service.js";
 
 import { response } from "../utils/templates/response.template.js";
 import { AuthError } from "../errors/TypeError.js";
