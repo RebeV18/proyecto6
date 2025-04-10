@@ -33,7 +33,7 @@ export const getProductByIdService = async (id) => {
     return product;
   } catch (error) {
     throw new ProductsError(
-      "Error al intentar obtener un producto por ID",
+      `Error al intentar obtener un producto por ID ${id}`,
       500,
       error
     );
@@ -68,7 +68,7 @@ export const updateProductByIdService = async (id, dataProduct) => {
     return [productOld, productUpdated];
   } catch (error) {
     throw new ProductsError(
-      "Error al intentar actualizar el producto con el ID",
+      `Error al intentar actualizar el producto con el ID ${id}`,
       500,
       error
     );
