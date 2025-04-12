@@ -55,13 +55,13 @@
 
 /**
  * @swagger
- * /api/v1/product/create:
+ * /api/swagger/product/create:
  *   post:
  *     summary: Crea un producto (canción)
  *     tags: [Product]
  *     security:
  *       - bearerAuth: [] #middlewares:authMiddleware & verifyAdmin
- *          $ref: '#middlewares
+ *          $ref: '#middlewares'
  *     requestBody:
  *       content:
  *         application/json:
@@ -156,7 +156,7 @@
   *       500:
   *         description: Error al intentar eliminar el producto con el ID: ${id}
   */
-    router.put("product/delete/{id}, products.controller.deleteProductById);
+  router.put("product/delete/{id}, products.controller.deleteProductById);
 
 
 /**
@@ -181,7 +181,7 @@
   *       500:
   *         description: Error al intentar restaurar el producto con el ID: ${id}
   */
-    router.patch("product/restore/{id}, products.controller.restoreProductById);
+    router.patch("product/restore/{:id}, products.controller.restoreProductById);
 
 
 
@@ -232,9 +232,7 @@
   *       500:
   *         description: Credenciales incorrectas
   */
- 
  router.post("user/login", user.controller.login);
-*/
  
  /**
   * @swagger
@@ -281,5 +279,4 @@
   *       500:
   *         description: No tienes permiso para editar este usuario
   */
-    router.put("user/update/{id}", user.controller.updateUserById);
-*/
+router.put("user/update/{id}", user.controller.updateUserById);
