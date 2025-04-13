@@ -4,6 +4,9 @@ import { dbConnect } from "./src/config/db.config.js";
 import apiRouter from "./src/routes/index.routes.js";
 import { errorHandler } from "./src/middlewares/errorHandler.js";
 
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+
 const app = express();
 
 dbConnect();
@@ -20,6 +23,28 @@ app.use("/api/v1", apiRouter);
 //Middlewares de errores
 app.use(errorHandler);
 
+//Swagger configuration
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "API Swagger Demo",
+      version: "1.0.0",
+      description: "Documentación auto-generada con Swagger",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
+  },
+  apis: ["./app.js"], // donde Swagger buscará las anotaciones
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en el puerto: ${PORT}`);
+  console.log(`Documentación Swagger en el puerto: puerto: ${PORT}`);
 });

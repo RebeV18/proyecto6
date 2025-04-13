@@ -55,7 +55,7 @@
 
 /**
  * @swagger
- * /api/swagger/product/create:
+ * /api-docs/product/create:
  *   post:
  *     summary: Crea un producto (canción)
  *     tags: [Product]
@@ -77,7 +77,7 @@
 
  /**
   * @swagger
-  * /api/v1/product/readall:
+  * /api-docs/product/readall:
   *   get:
   *     summary: Obtiene todos los productos
   *     tags: [Product]
@@ -91,7 +91,7 @@
  
  /**
   * @swagger
-  * /api/v1/product/readone/{id}:
+  * /api-docs/product/readone/{id}:
   *   get:
   *     summary: Obtiene un producto por ID.
   *     tags: [Product]
@@ -112,7 +112,7 @@
 
 /**
   * @swagger
-  * /api/v1/product/update/{id}:
+  * /api-docs/product/update/{id}:
   *   put:
   *     summary: Edita la información del producto con ID {id}.
   *     tags: [Product]
@@ -136,7 +136,7 @@
 
 /**
   * @swagger
-  * /api/v1/product/delete/{id}:
+  * /api-docs/product/delete/{id}:
   *   delete:
   *     summary: Coloca como inactivo el producto con ID {id}.
   *     tags: [Product]
@@ -156,12 +156,12 @@
   *       500:
   *         description: Error al intentar eliminar el producto con el ID: ${id}
   */
-  router.put("product/delete/{id}, products.controller.deleteProductById);
+  router.put("product/delete/{id}", products.controller.deleteProductById);
 
 
 /**
   * @swagger
-  * /api/v1/product/restore/{id}:
+  * /api-docs/product/restore/{id}:
   *   patch:
   *     summary: Coloca como activo nuevamente el producto con ID {id}.
   *     tags: [Product]
@@ -181,14 +181,14 @@
   *       500:
   *         description: Error al intentar restaurar el producto con el ID: ${id}
   */
-    router.patch("product/restore/{:id}, products.controller.restoreProductById);
+    router.patch("product/restore/{:id}", products.controller.restoreProductById);
 
 
 
 
   /**
  * @swagger
- * /api/v1/user/register:
+ * /api-docs/user/register:
  *   post:
  *     summary: Crea un usuario
  *     tags: [User]
@@ -210,7 +210,7 @@
 
  /**
   * @swagger
-  * /api/v1/user/login:
+  * /api-docs/user/login:
   *   post:
   *     summary: Realiza logueo del usuario
   *     tags: [User]
@@ -236,7 +236,7 @@
  
  /**
   * @swagger
-  * /api/v1/user/verifytoken:
+  * /api-docs/user/verifytoken:
   *   get:
   *     summary: Permite que la plataforma recuerde el estado de inicio de sesión por medio del token.
   *     tags: [User]
@@ -259,7 +259,8 @@
 
  /**
   * @swagger
-  * /api/v1/user/update/{id}:
+  * /api-docscls
+  * /user/update/{id}:
   *   put:
   *     summary: Edita la información del usuario con ID {id}.
   *     tags: [User]
