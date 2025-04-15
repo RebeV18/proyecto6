@@ -38,7 +38,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["./app.js"], // donde Swagger buscará las anotaciones
+  apis: ["./src/routes/swagger.routes.js"],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
