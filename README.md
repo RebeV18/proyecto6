@@ -8,8 +8,11 @@ Además, utilizarás MongoDB y Mongoose para la persistencia de datos, y constru
 
 También utilizarás OpenAPI y Swagger para documentar tu aplicación, y tu código deberá seguir una estructura de carpetas clara con controladores, modelos y rutas. Finalmente, desplegarás tu aplicación a través de render.com y MongoDB Atlas.
 
+
+
 ## Endpoints
 ![](https://res.cloudinary.com/ddxlvh0go/image/upload/v1744677070/End_Points_eqxoax.png)
+
 
 
 ## Documentación Swagger
@@ -17,4 +20,7 @@ También utilizarás OpenAPI y Swagger para documentar tu aplicación, y tu cód
 ![](https://res.cloudinary.com/ddxlvh0go/image/upload/v1744676856/Swagger_qcengq.png)
 
 
+
 ## Render
+
+https://proyecto6-sgv2.onrender.com
