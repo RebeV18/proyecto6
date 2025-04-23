@@ -19,6 +19,14 @@ const PORT = envs.port || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const corsOptions = {
+  origin: "https://proyecto6-sgv2.onrender.com",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 //Middlewares de rutas
 app.use("/api/v1", apiRouter);
 
@@ -45,14 +53,6 @@ const swaggerOptions = {
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-const corsOptions = {
-  origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
 
 app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en el puerto: ${PORT}`);
