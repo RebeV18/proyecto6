@@ -19,13 +19,13 @@ const PORT = envs.port || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const corsOptions = {
-  origin: "https://proyecto6-sgv2.onrender.com",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
-};
+// const corsOptions = {
+//   origin: "https://proyecto6-sgv2.onrender.com",
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   credentials: true,
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 //Middlewares de rutas
 app.use("/api/v1", apiRouter);
