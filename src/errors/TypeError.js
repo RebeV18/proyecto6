@@ -44,6 +44,16 @@ export class AuthError extends CustomError {
   }
 }
 
+export class PaymentsError extends CustomError {
+  constructor(message, statusCode, details) {
+    super(
+      message || "Error en la colección de pagos",
+      statusCode || 500,
+      details
+    );
+  }
+}
+
 export class InternalServerError extends CustomError {
   constructor(message, statusCode, details) {
     super(

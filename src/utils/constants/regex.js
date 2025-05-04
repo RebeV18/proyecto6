@@ -1,0 +1,1 @@
+export const URL_IMAGE= /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
