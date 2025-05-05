@@ -1,4 +1,4 @@
-import { mercadopagoService } from "../services/payments/mercadopago.service.js";
+import { mercadopagoService } from "../services/mercadopago.service.js";
 import { response } from "../utils/templates/response.template.js";
 
 export const createPayment = async (req, res, next) => {
