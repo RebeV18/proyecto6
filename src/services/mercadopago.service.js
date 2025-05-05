@@ -1,8 +1,8 @@
 import { Preference } from "mercadopago";
-import client from "../../config/mercadoPago.config.js";
+import client from "../config/mercadoPago.config.js";
 
-import { envs } from "../../config/envs.config.js";
-import { PaymentsError } from "../../errors/TypeError.js";
+import { envs } from "../config/envs.config.js";
+import { PaymentsError } from "../errors/TypeError.js";
 
 const { frontendUrl } = envs;
 
