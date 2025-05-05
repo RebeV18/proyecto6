@@ -22,7 +22,6 @@ export const mercadopagoService = async (cart) => {
         failure: `${frontendUrl}/mercadopago/status?status=failure`,
         pending: `${frontendUrl}/mercadopago/status?status=pending`,
       },
-      auto_return: "approved",
     };
 
     const preference = new Preference(client);
