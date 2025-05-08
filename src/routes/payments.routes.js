@@ -6,6 +6,6 @@ import { verifyAdmin } from "../middlewares/verifyAdmin.middleware.js";
 
 const router = Router();
 
-router.post("/mercadopago", authMiddleware, verifyAdmin, createPayment);
+router.post("/mercadopago", authMiddleware, createPayment);
 
 export default router;
