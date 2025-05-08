@@ -5,7 +5,7 @@ export const createPayment = async (req, res, next) => {
   try {
     const { cart } = req.body;
     const preferenceResult = await mercadopagoService(cart);
-
+    console.log("preferred", preferenceResult);
     response(
       res,
       preferenceResult,
