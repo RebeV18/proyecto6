@@ -131,3 +131,25 @@
  *       500:
  *         description: Credenciales incorrectas
  */
+
+/**
+ * @swagger
+ * /payment/mercadopago:
+ *   post:
+ *     summary: Genera la pasarela de pago.
+ *     tags: [Payment]
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               items: object
+ *               back_url: string
+ *                  payment response: string
+ *     responses:
+ *       200:
+ *         Preferencia de compra creada con éxito.
+ *       500:
+ *         description: Error en la colección de pagos.
+ */
