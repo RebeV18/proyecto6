@@ -7,7 +7,7 @@ export const errorHandler = (err, req, res, _next) => {
       err.message || "Error Inesperado! D:",
       err.statusCode || 500,
       err.details ||
-        "Ups! Tenemos un Error Imprevisto, contacta con nuestro equipo de soporte por favor"
+        "Tenemos un Error Imprevisto, contacta con nuestro equipo de soporte, por favor"
     );
   }
 

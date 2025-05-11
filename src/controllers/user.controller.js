@@ -21,7 +21,6 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
-    console.log("req", req.body);
     const [user, token] = await loginService(req.body);
     const custom = {
       token,
