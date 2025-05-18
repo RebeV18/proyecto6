@@ -1,14 +1,4 @@
-import { NotFoundError, ValidationError } from "../errors/TypeError.js";
-
-export const validateDate = (date) => {
-  const dateRegEx = /^\d{4}-\d{2}-\d{2}$/;
-  if (!dateRegEx.test(date)) {
-    throw new ValidationError(
-      "La fecha no es valida",
-      `la fecha ${date} debe tener el formato YYYY-MM-DD`
-    );
-  }
-};
+import { NotFoundError } from "../errors/TypeError.js";
 
 export const notFoundData = (data, message, datails) => {
   if (!data)
@@ -30,7 +20,7 @@ export const notActive = (data, message, datails) => {
       if (!item.isActive)
         throw new NotFoundError(
           message || "No se encontraron los datos activos",
-          datails || "No se econtraron los datos acrtivos solicitados"
+          datails || "No se econtraron los datos activos solicitados"
         );
     });
   }
@@ -38,7 +28,7 @@ export const notActive = (data, message, datails) => {
   if (!Array.isArray(data) && !data.isActive)
     throw new NotFoundError(
       message || "No se encontraron los datos activos",
-      datails || "No se econtraron los datos acrtivos solicitados"
+      datails || "No se econtraron los datos activos solicitados"
     );
 };
 

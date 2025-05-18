@@ -56,5 +56,5 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en el puerto: ${PORT}`);
-  console.log(`Documentación Swagger en el puerto: puerto: ${PORT}`);
+  console.log(`Documentación Swagger en el puerto: ${PORT}`);
 });

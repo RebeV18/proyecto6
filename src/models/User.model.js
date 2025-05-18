@@ -23,7 +23,7 @@ const userSchema = new Schema(
         validator(value) {
           return /^\+[0-9]{11}$/.test(value);
         },
-        message: "El telefono debe contener 11 digitos",
+        message: "El teléfono debe tener formato +56999999999",
       },
     },
     password: { type: String, required: true, trim: true },

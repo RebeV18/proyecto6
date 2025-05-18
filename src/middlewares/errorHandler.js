@@ -4,10 +4,10 @@ import { InternalServerError } from "../errors/TypeError.js";
 export const errorHandler = (err, req, res, _next) => {
   if (!(err instanceof CustomError)) {
     err = new InternalServerError(
-      err.message || "Error Inesperado! D:",
+      err.message || "¡Error Inesperado!",
       err.statusCode || 500,
       err.details ||
-        "Tenemos un Error Imprevisto, contacta con nuestro equipo de soporte, por favor"
+        "Tenemos un error imprevisto, contacta a nuestro equipo de soporte, por favor"
     );
   }
 
