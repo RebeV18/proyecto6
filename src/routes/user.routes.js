@@ -16,7 +16,7 @@ const userRouter = Router();
 userRouter.post("/register", register);
 userRouter.post("/login", login);
 
-userRouter.put("/update/:id", authMiddleware, verifyAdmin, updateUserById);
+userRouter.put("/update/:id", authMiddleware, updateUserById);
 userRouter.get("/verifytoken", authMiddleware, verifyAdmin, verifyToken);
 
 userRouter.get("/", authMiddleware, verifyAdmin, getAllUsers);
