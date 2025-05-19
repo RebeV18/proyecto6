@@ -17,6 +17,14 @@
  *           type: number
  *         isActive:
  *           type: boolean
+ *         anho_lanzamiento
+ *             type:number
+ *          apple:
+ *           type: string
+ *          spotify:
+ *           type: string
+ *          youtube:
+ *           type: string
  *     User:
  *       type: object
  *       properties:
