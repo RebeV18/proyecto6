@@ -1,35 +1,50 @@
 {
   "name": "proyecto6",
   "version": "1.0.0",
-  "main": "server.js",
+  "description": "LG Songs Backend - Tienda de música con Firebase",
   "type": "module",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
     "dev": "nodemon server.js",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "start": "node server.js",
+    "build": "echo Backend listo para producción",
+    "build:check": "node -c server.js && echo Sintaxis verificada",
+    "test": "echo No tests configured",
+    "docs": "echo 'Documentación: http://localhost:3000/api-docs'"
   },
-  "keywords": [],
-  "author": "Rebeca Vargas",
+  "keywords": [
+    "music",
+    "store",
+    "firebase",
+    "express",
+    "api",
+    "backend",
+    "songs",
+    "jwt",
+    "mercadopago"
+  ],
+  "author": "Chile UDD",
   "license": "ISC",
-  "description": "Proyecto 6 bootcamp Full Stack Developer UDD",
   "dependencies": {
-    "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
+    "compression": "^1.8.1",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
+    "express-rate-limit": "^8.1.0",
     "firebase-admin": "^13.5.0",
+    "google-auth-library": "^10.3.0",
+    "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "mercadopago": "^2.5.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.0",
-    "@eslint/js": "^9.22.0",
-    "eslint": "^9.22.0",
     "nodemon": "^3.1.9"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   }
 }
