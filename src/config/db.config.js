@@ -1,36 +1,14 @@
-import mongoose from "mongoose";
-import { envs } from "./envs.config.js";
-import { DataBaseError } from "../errors/TypeError.js";
-import { updateDocsProducts } from "../services/DB/updateDocsProducts.js";
+import { db } from "./firebase.config.js";
 
-const { db } = envs;
-
-export const dbConnect = async ({
-  updateDocs = false,
-  showModels = false,
-} = {}) => {
+export const dbConnect = async () => {
   try {
-    await mongoose.connect(db.uri);
-    console.log("Nos conectamos con MongoDB!! :D 🛸");
+    console.log("🔄 Conectando a Firebase...");
 
-    if (updateDocs) {
-      await updateDocsProducts();
-      console.log("Documentos actualizados con éxito");
-    }
+    await db.collection("test").limit(1).get();
 
-    if (showModels) {
-      console.log("Modelos de la base de datos:");
-      const collections = await mongoose.connection.db
-        .listCollections()
-        .toArray();
-      console.log(collections);
-      collections.forEach((collection) => console.log(`${collection.name}`));
-    }
+    console.log("✅ Conectado a Firebase Firestore!! :D 🔥");
   } catch (error) {
-    throw new DataBaseError(
-      "No nos pudimos conectar a la base de datos de Mongo :c",
-      500,
-      error
-    );
+    console.error("❌ Error conectando a Firebase:", error);
+    throw new Error("No se pudo conectar a Firebase", error);
   }
 };

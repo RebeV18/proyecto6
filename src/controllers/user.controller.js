@@ -1,31 +1,30 @@
+import { response } from "../helpers/response.helper.js";
 import {
-  getAllUsersService,
-  updateUserByIdService,
-  loginService,
   registerService,
+  loginService,
+  getAllUsersService,
+  getUserByIdService,
+  updateUserByIdService,
 } from "../services/user.service.js";
-
-import { response } from "../utils/templates/response.template.js";
-import { AuthError } from "../errors/TypeError.js";
 
 export const register = async (req, res, next) => {
   try {
-    const userData = req.body;
-    const user = await registerService(userData);
-    response(res, user, 201, "Usuario creado con éxito");
+    const user = await registerService(req.body);
+    response(res, user, 201, "Usuario registrado con éxito");
   } catch (error) {
     next(error);
-    console.error(error);
   }
 };
 
 export const login = async (req, res, next) => {
   try {
     const [user, token] = await loginService(req.body);
+
     const custom = {
       token,
     };
-    response(res, user, 200, "Usuario logueado con éxito", custom);
+
+    response(res, user, 200, "Inicio de sesión exitoso", custom);
   } catch (error) {
     next(error);
   }
@@ -40,42 +39,26 @@ export const getAllUsers = async (req, res, next) => {
   }
 };
 
-export const updateUserById = async (req, res, next) => {
+export const getUserById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const dataUser = req.body;
-
-    if (req.user.uid !== id) {
-      throw new AuthError(
-        "No tienes permiso para editar este usuario",
-        403
-      );
-    }
-
-    const [oldUser, updatedUser] = await updateUserByIdService(id, dataUser);
-
-    const custom = {
-      oldData: oldUser,
-    };
-
-    response(
-      res,
-      updatedUser,
-      201,
-      `El usuario con el id: ${id} fue actualizado con éxito`,
-      custom
-    );
+    const user = await getUserByIdService(id);
+    response(res, user, 200, "Usuario encontrado con éxito");
   } catch (error) {
     next(error);
   }
 };
 
-export const verifyToken = (req, res, next) => {
+export const updateUserById = async (req, res, next) => {
   try {
-    res.status(200).json({
-      message: "Token válido",
-      user: req.user,
-    });
+    const { id } = req.params;
+    const [oldUser, updatedUser] = await updateUserByIdService(id, req.body);
+
+    const custom = {
+      oldData: oldUser,
+    };
+
+    response(res, updatedUser, 200, "Usuario actualizado con éxito", custom);
   } catch (error) {
     next(error);
   }

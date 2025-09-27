@@ -1,13 +1,22 @@
+import { response } from "../helpers/response.helper.js";
 import {
   createProductService,
-  deleteProductByIdService,
   getAllProductsService,
   getProductByIdService,
-  restoreProductByIdService,
   updateProductByIdService,
-} from "../services/products.service.js";
+  deleteProductByIdService,
+  restoreProductByIdService,
+  searchProductsService,
+} from "../services/product.service.js";
 
-import { response } from "../utils/templates/response.template.js";
+export const createProduct = async (req, res, next) => {
+  try {
+    const product = await createProductService(req.body);
+    response(res, product, 201, "Producto creado con éxito");
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const getAllProducts = async (req, res, next) => {
   try {
@@ -22,23 +31,7 @@ export const getProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const product = await getProductByIdService(id);
-    response(
-      res,
-      product,
-      200,
-      `Productos con el id: ${id} encontrado con éxito`
-    );
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const createProduct = async (req, res, next) => {
-  try {
-    const dataProduct = req.body;
-    const products = await createProductService(dataProduct);
-
-    response(res, products, 201, "Producto creado con éxito");
+    response(res, product, 200, "Producto encontrado con éxito");
   } catch (error) {
     next(error);
   }
@@ -47,22 +40,20 @@ export const createProduct = async (req, res, next) => {
 export const updateProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const dataProduct = req.body;
-
-    const [productOld, productUpdated] = await updateProductByIdService(
+    const [oldProduct, updatedProduct] = await updateProductByIdService(
       id,
-      dataProduct
+      req.body
     );
 
     const custom = {
-      oldData: productOld,
+      oldData: oldProduct,
     };
 
     response(
       res,
-      productUpdated,
-      201,
-      `Producto con el id: ${id} actualizado con éxito`,
+      updatedProduct,
+      200,
+      "Producto actualizado con éxito",
       custom
     );
   } catch (error) {
@@ -74,13 +65,7 @@ export const deleteProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const product = await deleteProductByIdService(id);
-
-    response(
-      res,
-      product,
-      200,
-      `Producto con el id: ${id} eliminado con éxito`
-    );
+    response(res, product, 200, "Producto eliminado con éxito");
   } catch (error) {
     next(error);
   }
@@ -90,12 +75,17 @@ export const restoreProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const product = await restoreProductByIdService(id);
-    response(
-      res,
-      product,
-      200,
-      `Producto con el id: ${id} restaurado con éxito`
-    );
+    response(res, product, 200, "Producto restaurado con éxito");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const searchProducts = async (req, res, next) => {
+  try {
+    const { q } = req.query;
+    const products = await searchProductsService(q);
+    response(res, products, 200, "Búsqueda completada con éxito");
   } catch (error) {
     next(error);
   }

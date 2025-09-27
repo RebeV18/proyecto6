@@ -1,10 +1,20 @@
-export const verifyAdmin = (req, res, next) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).json({
-      message: "No tienes permisos para acceder a este recurso",
-      statusCode: 403,
-    });
-  }
+import { AuthError } from "../errors/TypeError.js";
 
-  next();
+export const verifyAdmin = (req, res, next) => {
+  try {
+    if (!req.user) {
+      throw new AuthError("Usuario no autenticado", 401);
+    }
+
+    if (!req.user.isAdmin) {
+      throw new AuthError(
+        "Acceso denegado. Se requieren permisos de administrador",
+        403
+      );
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
 };

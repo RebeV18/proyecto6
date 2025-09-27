@@ -1,12 +1,16 @@
+import { db, auth } from "../config/firebase.config.js";
+import { hashPassword, comparePassword } from "../helpers/auth.helpers.js";
+import { AuthError } from "../errors/TypeError.js";
 import jwt from "jsonwebtoken";
-
-import { AuthError, UserError } from "../errors/TypeError.js";
-import { User } from "../models/User.model.js";
-import { formatUserData } from "../utils/formatUserData.js";
-import { comparePassword, hashPassword } from "../utils/hashPassword.js";
-import { notFoundActiveData } from "../utils/validate.js";
-
 import { envs } from "../config/envs.config.js";
+import {
+  validateUserData,
+  validateRegistrationData,
+  validateLoginData,
+  sanitizeUserData,
+  prepareUserForSave,
+  prepareUserForUpdate,
+} from "../helpers/user.helpers.js";
 
 const { secretKey, jwtExpiration } = envs.auth;
 
@@ -16,44 +20,101 @@ export const registerService = async ({
   pais,
   email,
   telefono,
-  password,
+  password: _password,
   isAdmin = false,
 }) => {
   try {
-    const hashedPassword = await hashPassword(password);
-
-    const userData = formatUserData(
-      hashedPassword,
+    const userData = {
       nombre,
       apellido,
       pais,
       email,
       telefono,
-      isAdmin
-    );
+      password: _password,
+      isAdmin,
+    };
 
-    const user = await User.create(userData);
+    // Validar datos
+    validateRegistrationData(userData);
 
-    return user;
+    // Verificar si el email ya existe
+    const existingUser = await db
+      .collection("users")
+      .where("email", "==", email.toLowerCase().trim())
+      .limit(1)
+      .get();
+
+    if (!existingUser.empty) {
+      throw new AuthError("El email ya está registrado", 409);
+    }
+
+    // Hashear contraseña
+    const hashedPassword = await hashPassword(_password);
+
+    // Crear usuario en Firebase Auth
+    const userAuth = await auth.createUser({
+      email: email.toLowerCase().trim(),
+      password: _password,
+      displayName: `${nombre} ${apellido}`,
+    });
+
+    // Preparar datos para guardar
+    const newUserData = prepareUserForSave({
+      ...userData,
+      password: hashedPassword,
+      uid: userAuth.uid,
+    });
+
+    // Guardar en Firestore
+    await db.collection("users").doc(userAuth.uid).set(newUserData);
+
+    // Asignar custom claims
+    await auth.setCustomUserClaims(userAuth.uid, {
+      isAdmin,
+      role: isAdmin ? "admin" : "user",
+    });
+
+    return sanitizeUserData(newUserData);
   } catch (error) {
     console.error(error);
-    throw new Error("Error al intentar registrar el usuario", 500, error);
+    if (error instanceof AuthError) {
+      throw error;
+    }
+    throw new Error("Error al intentar registrar el usuario: " + error.message);
   }
 };
 
 export const loginService = async ({ email, password }) => {
   try {
-    const user = await User.findOne({ email });
+    const loginData = { email, password };
+
+    // Validar datos de login
+    validateLoginData(loginData);
+
+    // Buscar usuario en Firestore por email
+    const userQuery = await db
+      .collection("users")
+      .where("email", "==", email.toLowerCase().trim())
+      .where("isActive", "==", true)
+      .limit(1)
+      .get();
+
+    if (userQuery.empty) {
+      throw new AuthError("Credenciales incorrectas", 401);
+    }
+
+    const userDoc = userQuery.docs[0];
+    const user = userDoc.data();
 
     const passwordMatch = await comparePassword(password, user.password);
 
-    if (!user || !passwordMatch) {
+    if (!passwordMatch) {
       throw new AuthError("Credenciales incorrectas", 401);
     }
 
     const token = jwt.sign(
       {
-        uid: user._id,
+        uid: user.uid,
         nombre: user.nombre,
         email: user.email,
         isAdmin: user.isAdmin,
@@ -64,42 +125,117 @@ export const loginService = async ({ email, password }) => {
       }
     );
 
-    return [user, token];
+    return [sanitizeUserData(user), token];
   } catch (error) {
-    throw new AuthError("Error al intentar iniciar sesión", 500, error);
+    if (error instanceof AuthError) {
+      throw error;
+    }
+    throw new AuthError(
+      "Error al intentar iniciar sesión: " + error.message,
+      500
+    );
   }
 };
 
 export const getAllUsersService = async () => {
   try {
-    const users = await User.find({ isActive: true });
-    return users;
+    const snapshot = await db
+      .collection("users")
+      .where("isActive", "==", true)
+      .orderBy("createdAt", "desc")
+      .get();
+
+    return snapshot.docs.map(doc => {
+      const userData = {
+        id: doc.id,
+        ...doc.data()
+      };
+      return sanitizeUserData(userData);
+    });
   } catch (error) {
-    throw new Error("Error al intentar obtener todos los usuarios", 500, error);
+    throw new Error("Error al obtener usuarios: " + error.message);
   }
 };
 
-export const updateUserByIdService = async (id, dataUser) => {
+export const getUserByIdService = async (uid) => {
   try {
-    const oldUser = await User.findOneAndUpdate(
-      { _id: id, isActive: true },
-      dataUser
-    );
+    const userDoc = await db.collection("users").doc(uid).get();
 
-    const updatedUser = await User.findById(id, { isActive: true });
+    if (!userDoc.exists) {
+      throw new AuthError("Usuario no encontrado", 404);
+    }
 
-    notFoundActiveData(
-      oldUser,
-      `No pudimos encontrar el usuario con el id: ${id}`,
-      `No pudimos encontrar el usuario con id: ${id} en la colección de usuarios de la base de datos`
-    );
+    const user = userDoc.data();
 
-    return [oldUser, updatedUser];
+    if (!user.isActive) {
+      throw new AuthError("Usuario inactivo", 403);
+    }
+
+    const userWithId = {
+      id: userDoc.id,
+      ...user
+    };
+
+    return sanitizeUserData(userWithId);
   } catch (error) {
-    throw new UserError(
-      "Error al intentar actualizar el usuario con el ID",
-      500,
-      error
-    );
+    if (error instanceof AuthError) {
+      throw error;
+    }
+    throw new Error("Error al obtener usuario: " + error.message);
+  }
+};
+
+export const updateUserByIdService = async (uid, updateData) => {
+  try {
+    const userRef = db.collection("users").doc(uid);
+    const userDoc = await userRef.get();
+
+    if (!userDoc.exists) {
+      throw new AuthError("Usuario no encontrado", 404);
+    }
+
+    const oldUser = userDoc.data();
+
+    if (!oldUser.isActive) {
+      throw new AuthError("No se puede actualizar un usuario inactivo", 403);
+    }
+
+    // Preparar datos de actualización
+    const updatedData = prepareUserForUpdate(updateData);
+
+    // Si hay password, hashearlo
+    if (updatedData.password) {
+      updatedData.password = await hashPassword(updatedData.password);
+    }
+
+    // Validar datos actualizados
+    if (Object.keys(updateData).length > 0) {
+      validateUserData({ ...oldUser, ...updatedData }, true);
+    }
+
+    // Actualizar en Firestore
+    await userRef.update(updatedData);
+
+    // Obtener usuario actualizado
+    const updatedDoc = await userRef.get();
+    const updatedUser = {
+      id: userDoc.id,
+      ...updatedDoc.data()
+    };
+
+    const oldUserWithId = {
+      id: userDoc.id,
+      ...oldUser
+    };
+
+    return [
+      sanitizeUserData(oldUserWithId),
+      sanitizeUserData(updatedUser)
+    ];
+  } catch (error) {
+    if (error instanceof AuthError) {
+      throw error;
+    }
+    throw new Error("Error al actualizar usuario: " + error.message);
   }
 };

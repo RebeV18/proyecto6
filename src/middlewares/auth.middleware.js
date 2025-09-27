@@ -4,26 +4,35 @@ import { AuthError } from "../errors/TypeError.js";
 
 const { secretKey } = envs.auth;
 
-export const authMiddleware = (req, res, next) => {
+export const authMiddleware = async (req, res, next) => {
   try {
-    const { authorization } = req.headers;
-    const token = authorization?.startsWith("Bearer ")
-      ? authorization.slice(7)
-      : null;
+    const authHeader = req.headers.authorization;
 
-    if (!token) throw new AuthError("Token no proporcionado", 401);
+    if (!authHeader) {
+      throw new AuthError("Token de acceso requerido", 401);
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    if (!token) {
+      throw new AuthError("Token de acceso requerido", 401);
+    }
 
     const decoded = jwt.verify(token, secretKey);
     req.user = decoded;
 
     next();
   } catch (error) {
-    if (error.name === "TokenExpiredError") {
-      throw new AuthError(
-        "El token ha expirado. Por favor, renueva tu sesión.",
-        401
-      );
+    if (error.name === "JsonWebTokenError") {
+      next(new AuthError("Token inválido", 401));
+    } else if (error.name === "TokenExpiredError") {
+      next(new AuthError("Token expirado", 401));
+    } else {
+      next(error);
     }
-    throw new AuthError("Token inválido o error inesperado", 500, error);
   }
+};
+
+export const verifyTokenMiddleware = (req, res, next) => {
+  return authMiddleware(req, res, next);
 };

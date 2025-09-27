@@ -4,19 +4,23 @@ dotenv.config();
 
 export const envs = {
   port: process.env.PORT || 3000,
-  frontendUrl: process.env.FRONTEND_URL || "http://localhost:5173",
-  db: {
-    uri:
-      process.env.MONGO_ATLAS || "mongodb://localhost:27017/mi_base_de_datos",
+  frontendUrl: process.env.URL_FRONTEND || "http://localhost:5173",
+  firebase: {
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    privateKeyId: process.env.FIREBASE_PRIVATE_KEY_ID,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    clientId: process.env.FIREBASE_CLIENT_ID,
+    certUrl: process.env.FIREBASE_CERT_URL,
   },
   auth: {
     saltRounds: process.env.SALT_ROUNDS || 10,
     secretKey: process.env.SECRET_KEY,
     refreshSecretKey: process.env.REFRESH_SECRET_KEY,
-    jwtExpiration: process.env.JWT_EXPIRATION || "1h",
+    jwtExpiration: process.env.JWT_EXPIRE || "1h",
   },
   mercadoPago: {
     mercadoPagoToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
-    sanbox: process.env.MERCADOPAGO_SANDBOX || false,
-  }
+    sandbox: process.env.MERCADOPAGO_SANDBOX || false,
+  },
 };
