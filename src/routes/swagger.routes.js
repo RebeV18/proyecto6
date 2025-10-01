@@ -1,5 +1,42 @@
 /**
  * @swagger
+ * info:
+ *   title: LG Songs API
+ *   version: 1.0.0
+ *   description: |
+ *     API completa para la tienda de música LG Songs
+ *
+ *     ## Características
+ *     - 🎵 **Gestión de productos musicales** (canciones y álbumes)
+ *     - 👥 **Sistema de usuarios** con autenticación JWT
+ *     - 💰 **Pagos integrados** con MercadoPago
+ *     - 🔐 **Autenticación y autorización** completa
+ *     - 📱 **API RESTful** moderna
+ *
+ *     ## Autenticación
+ *     La API utiliza JWT (JSON Web Tokens) para autenticación.
+ *     Include el token en el header: `Authorization: Bearer <tu_jwt_token>`
+ *
+ *     ## Códigos de Estado
+ *     - `200` - Éxito
+ *     - `201` - Creado exitosamente
+ *     - `400` - Error en los datos de entrada
+ *     - `401` - No autorizado
+ *     - `403` - Permisos insuficientes
+ *     - `404` - Recurso no encontrado
+ *     - `500` - Error interno del servidor
+ *   contact:
+ *     name: "Soporte LG Songs"
+ *     email: "soporte@lgsongs.com"
+ *     url: "https://lgsongs.com/soporte"
+ *   license:
+ *     name: "ISC"
+ * servers:
+ *   - url: http://localhost:3000
+ *     description: Servidor de desarrollo
+ *   - url: https://api.lgsongs.com
+ *     description: Servidor de producción
+ *
  * components:
  *   schemas:
  *     Product:
@@ -243,12 +280,60 @@
 /**
  * @swagger
  * tags:
+ *   - name: System
+ *     description: Endpoints del sistema y salud
  *   - name: Products
  *     description: Gestión de productos (canciones)
  *   - name: Users
  *     description: Gestión de usuarios
  *   - name: Payment
  *     description: Procesamiento de pagos con MercadoPago
+ */
+
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     summary: Health check del servidor
+ *     tags: [System]
+ *     responses:
+ *       200:
+ *         description: Servidor funcionando correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "OK"
+ *                 timestamp:
+ *                   type: string
+ *                   format: date-time
+ *                 uptime:
+ *                   type: number
+ *                   example: 123.456
+ *                 environment:
+ *                   type: string
+ *                   example: "development"
+ *                 version:
+ *                   type: string
+ *                   example: "1.0.0"
+ *                 service:
+ *                   type: string
+ *                   example: "LG Songs Backend"
+ *                 database:
+ *                   type: string
+ *                   example: "Firebase Firestore"
+ *                 memory:
+ *                   type: object
+ *                   properties:
+ *                     used:
+ *                       type: string
+ *                       example: "45 MB"
+ *                     total:
+ *                       type: string
+ *                       example: "128 MB"
  */
 
 /**
@@ -302,6 +387,17 @@
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Product'
+ *           example:
+ *             cancion: "Bohemian Rhapsody"
+ *             autores: "Queen, Freddie Mercury"
+ *             cd: "A Night at the Opera"
+ *             precio: 15990
+ *             track_numero: 11
+ *             anho_lanzamiento: 1975
+ *             imagen: "https://example.com/album-cover.jpg"
+ *             apple: "https://music.apple.com/album/bohemian-rhapsody"
+ *             spotify: "https://open.spotify.com/track/bohemian-rhapsody"
+ *             youtube: "https://www.youtube.com/watch?v=fJ9rUzIMcZQ"
  *     responses:
  *       201:
  *         description: Producto creado con éxito
@@ -379,6 +475,15 @@
  *     responses:
  *       200:
  *         description: Producto actualizado con éxito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       $ref: '#/components/schemas/Product'
  *       401:
  *         description: No autorizado
  *       403:
@@ -401,6 +506,10 @@
  *     responses:
  *       200:
  *         description: Producto eliminado con éxito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  *       401:
  *         description: No autorizado
  *       403:
@@ -443,6 +552,46 @@
  *                       type: array
  *                       items:
  *                         $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Álbum no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/products/cancion/{cancionName}:
+ *   get:
+ *     summary: Busca una canción específica por nombre
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: cancionName
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Nombre de la canción
+ *         example: "Bohemian Rhapsody"
+ *     responses:
+ *       200:
+ *         description: Canción encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Canción no encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 
 /**
@@ -481,6 +630,10 @@
  *                         $ref: '#/components/schemas/Product'
  *       400:
  *         description: Término de búsqueda requerido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 
 /**
@@ -494,14 +647,40 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
- *           example:
- *             nombre: "Juan"
- *             apellido: "Pérez"
- *             pais: "Chile"
- *             email: "juan.perez@email.com"
- *             telefono: "+56912345678"
- *             password: "password123"
+ *             type: object
+ *             required:
+ *               - nombre
+ *               - apellido
+ *               - pais
+ *               - email
+ *               - telefono
+ *               - password
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *                 minLength: 2
+ *                 maxLength: 100
+ *                 example: "Juan"
+ *               apellido:
+ *                 type: string
+ *                 minLength: 2
+ *                 maxLength: 100
+ *                 example: "Pérez"
+ *               pais:
+ *                 type: string
+ *                 example: "Chile"
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "juan.perez@email.com"
+ *               telefono:
+ *                 type: string
+ *                 pattern: "^\\+56[0-9]{9}$"
+ *                 example: "+56912345678"
+ *               password:
+ *                 type: string
+ *                 minLength: 6
+ *                 example: "password123"
  *     responses:
  *       201:
  *         description: Usuario registrado exitosamente
@@ -520,6 +699,7 @@
  *                         token:
  *                           type: string
  *                           description: JWT token
+ *                           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
  *       400:
  *         description: Datos de entrada inválidos
  *         content:
@@ -528,6 +708,10 @@
  *               $ref: '#/components/schemas/ErrorResponse'
  *       409:
  *         description: El usuario ya existe
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 
 /**
@@ -571,12 +755,135 @@
  *                         token:
  *                           type: string
  *                           description: JWT token
+ *                           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
  *       401:
  *         description: Credenciales incorrectas
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Obtiene lista de usuarios (solo admin)
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 20
+ *         description: Número máximo de usuarios
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *           default: 0
+ *         description: Número de usuarios a saltar
+ *     responses:
+ *       200:
+ *         description: Lista de usuarios obtenida
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       type: array
+ *                       items:
+ *                         $ref: '#/components/schemas/User'
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: Permisos insuficientes (requiere admin)
+ */
+
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Obtiene un usuario por ID
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del usuario
+ *     responses:
+ *       200:
+ *         description: Usuario encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       $ref: '#/components/schemas/User'
+ *       404:
+ *         description: Usuario no encontrado
+ *       401:
+ *         description: No autorizado
+ *
+ *   put:
+ *     summary: Actualiza un usuario
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del usuario
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *                 example: "Juan Carlos"
+ *               apellido:
+ *                 type: string
+ *                 example: "Pérez González"
+ *               telefono:
+ *                 type: string
+ *                 example: "+56987654321"
+ *               pais:
+ *                 type: string
+ *                 example: "Chile"
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       $ref: '#/components/schemas/User'
+ *       404:
+ *         description: Usuario no encontrado
+ *       401:
+ *         description: No autorizado
  */
 
 /**
@@ -626,18 +933,25 @@
  *                         id:
  *                           type: string
  *                           description: ID de la preferencia
+ *                           example: "123456789-abcd-1234-5678-123456789abc"
  *                         init_point:
  *                           type: string
  *                           format: uri
  *                           description: URL para iniciar el pago
+ *                           example: "https://www.mercadopago.cl/checkout/v1/redirect?pref_id=123456789-abcd-1234-5678-123456789abc"
  *                         sandbox_init_point:
  *                           type: string
  *                           format: uri
  *                           description: URL para sandbox (testing)
+ *                           example: "https://sandbox.mercadopago.cl/checkout/v1/redirect?pref_id=123456789-abcd-1234-5678-123456789abc"
  *       401:
  *         description: No autorizado
  *       400:
  *         description: Datos de entrada inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 
 /**
@@ -654,31 +968,115 @@
  *             properties:
  *               id:
  *                 type: string
+ *                 example: "12345678"
  *               live_mode:
  *                 type: boolean
+ *                 example: false
  *               type:
  *                 type: string
+ *                 example: "payment"
  *               date_created:
  *                 type: string
  *                 format: date-time
+ *                 example: "2023-10-01T10:30:00.000Z"
  *               application_id:
  *                 type: string
+ *                 example: "123456789012345"
  *               user_id:
  *                 type: string
+ *                 example: "987654321"
  *               version:
  *                 type: string
+ *                 example: "1"
  *               api_version:
  *                 type: string
+ *                 example: "v1"
  *               action:
  *                 type: string
+ *                 example: "payment.created"
  *               data:
  *                 type: object
  *                 properties:
  *                   id:
  *                     type: string
+ *                     example: "12345678"
  *     responses:
  *       200:
  *         description: Webhook procesado correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  *       400:
  *         description: Datos del webhook inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/payment/status/{paymentId}:
+ *   get:
+ *     summary: Obtiene el estado de un pago
+ *     tags: [Payment]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: paymentId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del pago en MercadoPago
+ *         example: "12345678"
+ *     responses:
+ *       200:
+ *         description: Estado del pago obtenido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: string
+ *                           description: ID del pago
+ *                           example: "12345678"
+ *                         status:
+ *                           type: string
+ *                           enum: [pending, approved, rejected, cancelled]
+ *                           description: Estado del pago
+ *                           example: "approved"
+ *                         status_detail:
+ *                           type: string
+ *                           description: Detalle del estado
+ *                           example: "accredited"
+ *                         transaction_amount:
+ *                           type: number
+ *                           description: Monto de la transacción
+ *                           example: 15990
+ *                         date_created:
+ *                           type: string
+ *                           format: date-time
+ *                           description: Fecha de creación
+ *                           example: "2023-10-01T10:30:00.000Z"
+ *                         date_approved:
+ *                           type: string
+ *                           format: date-time
+ *                           description: Fecha de aprobación
+ *                           example: "2023-10-01T10:35:00.000Z"
+ *       404:
+ *         description: Pago no encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: No autorizado
  */

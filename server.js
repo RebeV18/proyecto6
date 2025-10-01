@@ -80,57 +80,119 @@ app.get("/health", (req, res) => {
 // Rutas principales
 app.use("/api", apiRoutes);
 
-// ✅ SWAGGER DOCUMENTATION (ARREGLADO)
-async function setupSwagger() {
-  if (process.env.NODE_ENV !== "production") {
-    try {
-      const swaggerUi = await import("swagger-ui-express");
-      const swaggerJsdoc = await import("swagger-jsdoc");
+// ✅ SWAGGER DOCUMENTATION (MOVIDO AQUÍ - DESPUÉS DE LAS RUTAS)
+if (process.env.NODE_ENV !== "production") {
+  try {
+    const { default: swaggerUi } = await import("swagger-ui-express");
+    const { default: swaggerJsdoc } = await import("swagger-jsdoc");
 
-      const swaggerOptions = {
-        definition: {
-          openapi: "3.0.0",
-          info: {
-            title: "LG Songs API",
-            version: "1.0.0",
-            description: "API para tienda de música con Firebase y MercadoPago",
-            contact: {
-              name: "Chile UDD",
-              email: "support@lgsongs.com",
+    console.log("🔧 Configurando Swagger...");
+
+    const swaggerOptions = {
+      definition: {
+        openapi: "3.0.0",
+        info: {
+          title: "LG Songs API",
+          version: "1.0.0",
+          description: "API para tienda de música con Firebase y MercadoPago",
+          contact: {
+            name: "Chile UDD",
+            email: "support@lgsongs.com",
+          },
+        },
+        servers: [
+          {
+            url: `http://localhost:${envs.port}`,
+            description: "Servidor de desarrollo",
+          },
+        ],
+        components: {
+          securitySchemes: {
+            bearerAuth: {
+              type: "http",
+              scheme: "bearer",
+              bearerFormat: "JWT",
             },
           },
-          servers: [
-            {
-              url: `http://localhost:${envs.port}`,
-              description: "Servidor de desarrollo",
-            },
-            {
-              url: "https://api.lgsongs.com",
-              description: "Servidor de producción",
-            },
-          ],
         },
-        apis: ["./src/routes/*.js"],
-      };
+      },
+      apis: ["./src/routes/*.js", "./src/routes/swagger.routes.js"],
+    };
 
-      const specs = swaggerJsdoc.default(swaggerOptions);
-      app.use(
-        "/api-docs",
-        swaggerUi.default.serve,
-        swaggerUi.default.setup(specs)
-      );
+    const specs = swaggerJsdoc(swaggerOptions);
 
-      console.log(
-        `📚 Swagger disponible en: http://localhost:${envs.port}/api-docs`
-      );
-    } catch (error) {
-      console.log("⚠️  Swagger no disponible:", error.message);
-    }
+    console.log("📋 Generando documentación Swagger...");
+    console.log("Paths encontrados:", Object.keys(specs.paths || {}));
+
+    app.use(
+      "/api-docs",
+      swaggerUi.serve,
+      swaggerUi.setup(specs, {
+        explorer: true,
+        customCss: ".swagger-ui .topbar { display: none }",
+        customSiteTitle: "LG Songs API Documentation",
+        swaggerOptions: {
+          persistAuthorization: true,
+        },
+      })
+    );
+
+    console.log(
+      `📚 Swagger disponible en: http://localhost:${envs.port}/api-docs`
+    );
+  } catch (error) {
+    console.error("❌ Error configurando Swagger:", error.message);
+
+    // Endpoint de fallback con documentación básica
+    app.get("/api-docs", (req, res) => {
+      res.json({
+        title: "LG Songs API - Documentación",
+        message:
+          "Swagger UI no está disponible, pero aquí tienes los endpoints principales:",
+        error: error.message,
+        endpoints: {
+          health: "GET /health",
+          products: {
+            getAll: "GET /api/products",
+            getById: "GET /api/products/{id}",
+            getByCd: "GET /api/products/cd/{cdName}",
+            create: "POST /api/products (requiere admin)",
+          },
+          users: {
+            register: "POST /api/users/register",
+            login: "POST /api/users/login",
+          },
+          payment: {
+            createPreference: "POST /api/payment/create-preference",
+            webhook: "POST /api/payment/webhook",
+          },
+        },
+        examples: {
+          register: {
+            url: `http://localhost:${envs.port}/api/users/register`,
+            method: "POST",
+            body: {
+              nombre: "Juan",
+              apellido: "Pérez",
+              email: "juan@email.com",
+              password: "123456",
+              telefono: "+56912345678",
+              pais: "Chile",
+            },
+          },
+          login: {
+            url: `http://localhost:${envs.port}/api/users/login`,
+            method: "POST",
+            body: {
+              email: "juan@email.com",
+              password: "123456",
+            },
+          },
+        },
+      });
+    });
   }
 }
-
-// Llamar setup de Swagger
-setupSwagger();
 
 // Ruta 404
 app.use("*", (req, res) => {
@@ -206,6 +268,11 @@ const server = app.listen(envs.port, () => {
       process.env.MERCADOPAGO_SANDBOX === "true" ? "(Sandbox)" : "(Producción)"
     }`
   );
+
+  // Log adicional para Swagger
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`📚 Documentación: http://localhost:${envs.port}/api-docs`);
+  }
 });
 
 // Configurar timeout para producción
