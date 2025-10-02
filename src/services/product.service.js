@@ -1,20 +1,30 @@
 import { db } from "../config/firebase.config.js";
 import { AuthError } from "../errors/TypeError.js";
 import {
-  validateProductData,
   sanitizeProductData,
   prepareProductForSave,
   prepareProductForUpdate,
   buildSearchQuery,
+  validateCompleteProduct,
+  getNextAvailableTrack,
 } from "../helpers/product.helpers.js";
 
-// Crear producto
 export const createProductService = async (productData) => {
   try {
-    validateProductData(productData);
+    if (!productData.track) {
+      productData.track = await getNextAvailableTrack(productData.cd, db);
+      console.log(`🔢 Track asignado automáticamente: ${productData.track}`);
+    }
+
+    await validateCompleteProduct(productData, db);
+
     const newProduct = prepareProductForSave(productData);
+
     const docRef = await db.runTransaction(async (transaction) => {
       const productRef = db.collection("products").doc();
+
+      await validateCompleteProduct(productData, db);
+
       transaction.set(productRef, newProduct);
       return productRef;
     });
@@ -25,12 +35,13 @@ export const createProductService = async (productData) => {
       ...createdProduct.data(),
     };
 
+    console.log("✅ Producto creado exitosamente:", docRef.id);
     return sanitizeProductData(productWithId);
   } catch (error) {
     if (error instanceof AuthError) {
       throw error;
     }
-    console.error("Error en createProductService:", error);
+    console.error("❌ Error en createProductService:", error);
     throw new Error("Error al crear producto: " + error.message);
   }
 };
@@ -40,7 +51,8 @@ export const getAllProductsService = async (limit = 50, offset = 0) => {
     let query = db
       .collection("products")
       .where("isActive", "==", true)
-      .orderBy("createdAt", "desc");
+      .orderBy("cd")
+      .orderBy("track");
 
     if (limit) {
       query = query.limit(limit);
@@ -106,12 +118,13 @@ export const updateProductByIdService = async (productId, updateData) => {
         throw new AuthError("No se puede actualizar un producto inactivo", 403);
       }
 
-      const updatedData = prepareProductForUpdate(updateData);
+      const completeData = { ...oldProduct, ...updateData };
 
       if (Object.keys(updateData).some((key) => key !== "updatedAt")) {
-        validateProductData({ ...oldProduct, ...updatedData });
+        await validateCompleteProduct(completeData, db, productId);
       }
 
+      const updatedData = prepareProductForUpdate(updateData);
       transaction.update(productRef, updatedData);
 
       return {
@@ -120,6 +133,7 @@ export const updateProductByIdService = async (productId, updateData) => {
       };
     });
 
+    console.log("✅ Producto actualizado exitosamente:", productId);
     return [
       sanitizeProductData(result.oldProduct),
       sanitizeProductData(result.updatedProduct),
@@ -128,7 +142,7 @@ export const updateProductByIdService = async (productId, updateData) => {
     if (error instanceof AuthError) {
       throw error;
     }
-    console.error("Error en updateProductByIdService:", error);
+    console.error("❌ Error en updateProductByIdService:", error);
     throw new Error("Error al actualizar producto: " + error.message);
   }
 };
@@ -157,6 +171,7 @@ export const deleteProductByIdService = async (productId) => {
       return { id: productDoc.id, ...product };
     });
 
+    console.log("✅ Producto eliminado (soft delete):", productId);
     return sanitizeProductData(result);
   } catch (error) {
     if (error instanceof AuthError) {
@@ -183,6 +198,8 @@ export const restoreProductByIdService = async (productId) => {
         throw new AuthError("El producto ya está activo", 403);
       }
 
+      await validateCompleteProduct(product, db, productId);
+
       const updatedData = {
         isActive: true,
         updatedAt: new Date().toISOString(),
@@ -193,6 +210,7 @@ export const restoreProductByIdService = async (productId) => {
       return { id: productDoc.id, ...product, ...updatedData };
     });
 
+    console.log("✅ Producto restaurado exitosamente:", productId);
     return sanitizeProductData(result);
   } catch (error) {
     if (error instanceof AuthError) {
@@ -237,5 +255,102 @@ export const searchProductsService = async (searchTerm, limit = 20) => {
   } catch (error) {
     console.error("Error en searchProductsService:", error);
     throw new Error("Error al buscar productos: " + error.message);
+  }
+};
+
+export const getProductsByCdService = async (cdName, limit = 50) => {
+  try {
+    const snapshot = await db
+      .collection("products")
+      .where("isActive", "==", true)
+      .where("cd", "==", cdName)
+      .orderBy("track")
+      .limit(limit)
+      .get();
+
+    if (snapshot.empty) {
+      throw new AuthError(
+        `No se encontraron canciones en el CD "${cdName}"`,
+        404
+      );
+    }
+
+    const products = [];
+    snapshot.forEach((doc) => {
+      const productData = { id: doc.id, ...doc.data() };
+      products.push(sanitizeProductData(productData));
+    });
+
+    console.log(
+      `✅ Encontradas ${products.length} canciones en CD "${cdName}"`
+    );
+    return products;
+  } catch (error) {
+    if (error instanceof AuthError) {
+      throw error;
+    }
+    console.error("Error en getProductsByCdService:", error);
+    throw new Error("Error al obtener productos por CD: " + error.message);
+  }
+};
+
+export const getProductByCancionService = async (cancionName) => {
+  try {
+    const snapshot = await db
+      .collection("products")
+      .where("isActive", "==", true)
+      .where("cancion", "==", cancionName)
+      .limit(1)
+      .get();
+
+    if (snapshot.empty) {
+      throw new AuthError(`No se encontró la canción "${cancionName}"`, 404);
+    }
+
+    const doc = snapshot.docs[0];
+    const productData = { id: doc.id, ...doc.data() };
+
+    console.log(`✅ Canción encontrada: "${cancionName}"`);
+    return sanitizeProductData(productData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      throw error;
+    }
+    console.error("Error en getProductByCancionService:", error);
+    throw new Error("Error al obtener producto por canción: " + error.message);
+  }
+};
+
+export const getAvailableTracksForCdService = async (cdName) => {
+  try {
+    const snapshot = await db
+      .collection("products")
+      .where("isActive", "==", true)
+      .where("cd", "==", cdName)
+      .orderBy("track")
+      .get();
+
+    const usedTracks = [];
+    snapshot.forEach((doc) => {
+      usedTracks.push(doc.data().track);
+    });
+
+    const availableTracks = [];
+    for (let i = 1; i <= 999; i++) {
+      if (!usedTracks.includes(i)) {
+        availableTracks.push(i);
+      }
+    }
+
+    return {
+      cd: cdName,
+      usedTracks: usedTracks.sort((a, b) => a - b),
+      availableTracks: availableTracks.slice(0, 20),
+      totalSongs: usedTracks.length,
+      nextAvailable: availableTracks[0] || null,
+    };
+  } catch (error) {
+    console.error("Error en getAvailableTracksForCdService:", error);
+    throw new Error("Error al obtener tracks disponibles: " + error.message);
   }
 };
